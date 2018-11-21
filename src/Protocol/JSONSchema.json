@@ -1,0 +1,46 @@
+{
+  "Version": "StructureDraft-v0.1",
+  "Video Control": {
+    "Get Video Status": {
+      "Request Structure": ["header", "command", "id", "data length", "checksum"],
+      "Request Values": {
+        "header": "0xAA",
+        "command": "0x04",
+        "id": null,
+        "data length": 0,
+        "checksum": null
+      },
+      "Ack Structure": ["header", "command", "id", "data length", "Ack/Nak", "r-CMD,",
+      "Val 1", "Val 2", "Val 3", "Val 4", "Val 5", "Val 6", "Val 7", "Val 8", "checksum"],
+      "Ack Values": {
+        "header": "0xAA",
+        "command": "0xFF",
+        "id": null,
+        "data length": "0x0A",
+        "Ack/Nak": "0x41",
+        "r-CMD": "0x04",
+        "Val 1": "Contrast",
+        "Val 2": "Brightness",
+        "Val 3": "Sharpness",
+        "Val 4": "Color",
+        "Val 5": "Tint",
+        "Val 6": "ColorTone",
+        "Val 7": "ColorTemp",
+        "Val 8": 0,
+        "checksum": null
+      },
+      "Nak Structure": ["header", "command", "id", "data length", "Ack/Nak", "r-CMD,",
+        "Val 1", "checksum"],
+      "Nak Values": {
+        "header": "0xAA",
+        "command": "0xFF",
+        "id": null,
+        "data length": "0x03",
+        "Ack/Nak": "0x0E",
+        "r-CMD": "0x04",
+        "Val 1": "Error code",
+        "checksum": null
+      }
+    }
+  }
+}
