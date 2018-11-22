@@ -1,27 +1,27 @@
 package Protocol;
 
 public class DataPair {
-    private final String[] dataStructure;
-    private final int[] dataValues;
+    private final String[] DATASTRUCTURE;
+    private final int[] DATAVALUES;
 
     public DataPair(String[] dataStructure, int[] dataValues) {
-        this.dataStructure = dataStructure;
-        this.dataValues = dataValues;
+        this.DATASTRUCTURE = dataStructure;
+        this.DATAVALUES = dataValues;
     }
 
     public String getDataType(int position) {
-        return dataStructure[position];
+        return DATASTRUCTURE[position];
     }
 
     public String[] getDataStructure() {
-        return dataStructure;
+        return DATASTRUCTURE;
     }
 
     public int getDataValue(int position) {
-        return dataValues[position];
+        return DATAVALUES[position];
     }
 
     public int[] getDataValues() {
-        return dataValues;
+        return DATAVALUES;
     }
 }
