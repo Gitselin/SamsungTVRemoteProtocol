@@ -1,7 +1,8 @@
 {
-  "Version": "StructureDraft-v0.1",
+  "Version": "StructureDraft-v0.2",
   "Video Control": {
     "Get Video Status": {
+      "Description": "",
       "Request Structure": ["header", "command", "id", "data length", "checksum"],
       "Request Values": {
         "header": "0xAA",
@@ -11,7 +12,7 @@
         "checksum": null
       },
       "Ack Structure": ["header", "command", "id", "data length", "Ack/Nak", "r-CMD,",
-      "Val 1", "Val 2", "Val 3", "Val 4", "Val 5", "Val 6", "Val 7", "Val 8", "checksum"],
+        "Contrast", "Brightness", "Sharpness", "Color", "Tint", "ColorTone", "ColorTemp", "Val 8", "checksum"],
       "Ack Values": {
         "header": "0xAA",
         "command": "0xFF",
@@ -19,18 +20,18 @@
         "data length": "0x0A",
         "Ack/Nak": "0x41",
         "r-CMD": "0x04",
-        "Val 1": "Contrast",
-        "Val 2": "Brightness",
-        "Val 3": "Sharpness",
-        "Val 4": "Color",
-        "Val 5": "Tint",
-        "Val 6": "ColorTone",
-        "Val 7": "ColorTemp",
+        "Val 1": null,
+        "Val 2": null,
+        "Val 3": null,
+        "Val 4": null,
+        "Val 5": null,
+        "Val 6": null,
+        "Val 7": null,
         "Val 8": 0,
         "checksum": null
       },
       "Nak Structure": ["header", "command", "id", "data length", "Ack/Nak", "r-CMD,",
-        "Val 1", "checksum"],
+        "Error code", "checksum"],
       "Nak Values": {
         "header": "0xAA",
         "command": "0xFF",
@@ -38,7 +39,7 @@
         "data length": "0x03",
         "Ack/Nak": "0x0E",
         "r-CMD": "0x04",
-        "Val 1": "Error code",
+        "Val 1": null,
         "checksum": null
       }
     }
