@@ -1,0 +1,52 @@
+{
+  "Version": "StructureDraft-v0.2",
+  "Status Control": {
+    "Description": "Personal Computer shows current settings for the tv",
+    "Status-Get Status function": {
+      "Current status": "working",
+      "Wireshark capture file": "[23.11.2018] GetStatus - First success capture"
+    },
+    "Get Status": {
+      "Request Structure": ["header", "command", "id", "data length", "checksum"],
+      "Request Values": {
+        "header": "0xAA",
+        "command": "0xFF",
+        "id": null,
+        "data length": 0,
+        "checksum": null
+      },
+      "Ack Notes": "X Time NF, are no longer used and always 0x00",
+      "Ack Structure": ["header", "command", "id", "data length", "ack/nak", "r-CMD", "Power", "Volume", "Mute", "Input", "Aspect", "N Time NF", "F Time NF", "checksum"],
+      "Ack Values": {
+        "header": "0xAA",
+        "command": "0xFF",
+        "id": null,
+        "data length": 9,
+        "ack/nak": "A",
+        "r-CMD": "0x00",
+        "Power": null,
+        "Volume": null,
+        "Mute": null,
+        "Input": null,
+        "Aspect": null,
+        "N Time NF": "0x00",
+        "F Time NF": "0x00",
+        "checksum": null
+      },
+      "Nak Structure": ["header", "command", "id", "data length", "ack/nak", "r-CMD", "ERR", "checksum"],
+      "Nak Values": {
+        "header": "0xAA",
+        "command": "0xFF",
+        "data length": 3,
+        "ack/nak": "N",
+        "r-CMD": "0x00",
+        "ERR": null,
+        "checksum": null
+      },
+      "ERR note": {
+        "0": "Checksum error",
+        "1": "other (just defined as: etc.)"
+      }
+    }
+  }
+}
