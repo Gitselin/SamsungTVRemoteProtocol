@@ -6,7 +6,7 @@ public class ProtocolFunction {
     private DataPair request;
     private DataPair ack;
     private DataPair nak;
-    private int[] requestVarPos;
+    private int[] requestVarPos; // array of positions for variable data that needs to be generated
 
     public ProtocolFunction(DataPair request, DataPair ack, DataPair nak) {
         this.request = request;
