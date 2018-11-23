@@ -2,20 +2,26 @@ package Controller;
 
 public abstract class Utility {
 
-    private boolean debugMode = true;
+    private static boolean debugMode = true;
 
     /*
      *  Utility print methods
      */
 
-    public void debugPrint(String msg, boolean addSpacing) {
-        System.out.println(msg);
-        if (addSpacing) {
-            System.out.println();
+    public static void debugPrint(String msg, boolean addSpacing) {
+        if (debugMode) {
+            System.out.println(msg);
+            if (addSpacing) {
+                System.out.println();
+            }
         }
     }
 
-    public String printByteArray(byte[] bytes) {
+    public static void debugPrint(String msg) {
+        debugPrint(msg, false);
+    }
+
+    public static String printByteArray(byte[] bytes) {
         String s ="";
         for (byte b : bytes) {
             s += Byte.toString(b);
