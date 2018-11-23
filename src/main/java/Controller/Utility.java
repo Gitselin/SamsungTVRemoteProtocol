@@ -35,5 +35,11 @@ public abstract class Utility {
 
     // long to int (json-simple)
 
+    public static int unsignedByteToInt(byte b) {
+        //return Byte.toUnsignedInt(b);
 
+        return b & 0xFF; // Anding least significant 8 bits to get unsigned value
+    }
+
+    // TODO - byte array to int array using above
 }
