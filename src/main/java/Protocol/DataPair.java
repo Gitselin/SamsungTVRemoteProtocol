@@ -1,3 +1,11 @@
+/*
+ * Basic data structure for protocol modelling.
+ * Contains Strings for data descriptor and key to get data when loaded from JSON,
+ * along with ints for data values.
+ * The two field array should always have the same length, pairing of date is
+ * based on index position.
+ */
+
 package Protocol;
 
 public class DataPair {
@@ -5,6 +13,7 @@ public class DataPair {
     private final int[] DATAVALUES;
 
     public DataPair(String[] dataStructure, int[] dataValues) {
+        // TODO - Throw error if not same length (custom exception)
         this.DATASTRUCTURE = dataStructure;
         this.DATAVALUES = dataValues;
     }
