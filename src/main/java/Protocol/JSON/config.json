@@ -5,6 +5,6 @@
     "IP": "169.254.214.36",
     "PORT": 1515,
     "Screen ID": "0xFF",
-    "load list": []
+    "load list": ["status_control.json"]
   }
 }

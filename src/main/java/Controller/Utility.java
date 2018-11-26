@@ -38,8 +38,17 @@ public abstract class Utility {
     public static int unsignedByteToInt(byte b) {
         //return Byte.toUnsignedInt(b);
 
-        return b & 0xFF; // Anding least significant 8 bits to get unsigned value
+        return b & 0xff; // Anding least significant 8 bits to get unsigned value
     }
 
     // TODO - byte array to int array using above
+
+    // todo - Parse String hex to int
+
+
+    /*
+     *  Misc Utility
+     */
+
+    // TODO - Generic  from JSON
 }
