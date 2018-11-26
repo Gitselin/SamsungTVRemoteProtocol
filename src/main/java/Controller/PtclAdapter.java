@@ -12,7 +12,8 @@ public class PtclAdapter implements iPtclAdapter {
     }
 
     @Override
-    public void sendRequest(String requestKey) {
+    public boolean sendRequest(String requestKey) {
         // TODO - Case Switch by requestKey (valid keys defined in config.json)
+        return false;
     }
 }
