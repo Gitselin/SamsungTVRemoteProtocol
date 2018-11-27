@@ -34,6 +34,11 @@ public abstract class Utility {
      */
 
     // long to int (json-simple)
+    public static int longToInt(long l) {
+        Long x = new Long(l);
+
+        return x.intValue();
+    }
 
     public static int unsignedByteToInt(byte b) {
         //return Byte.toUnsignedInt(b);
@@ -42,13 +47,23 @@ public abstract class Utility {
     }
 
     // TODO - byte array to int array using above
+    public static int[] byteArrayToUnsignedIntArray(byte[] bytes) {
+        int[] ints = new int[bytes.length];
+        for (int i = 0; i < bytes.length; i++) {
+            ints[i] = unsignedByteToInt(bytes[i]);
+        }
+        return ints;
+    }
 
     // todo - Parse String hex to int
+    public static int hexStringToInt(String hex) {
+        return Integer.parseInt(hex);
+    }
 
 
     /*
      *  Misc Utility
      */
 
-    // TODO - Generic  from JSON
+    // TODO - Generic read from JSON
 }

@@ -16,4 +16,7 @@ public class PtclAdapter implements iPtclAdapter {
         // TODO - Case Switch by requestKey (valid keys defined in config.json)
         return false;
     }
+
+
+
 }

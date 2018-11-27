@@ -26,17 +26,6 @@ public class NetConnector {
         }
     }
 
-    private int getChecksum(int[] data) {
-        int checksum = 0;//commandType + id + dataLength + dataValue;
-        for (int i = 1; i < data.length-1; i++) { // skip first and last (header and checksum positions)
-            checksum += data[i];
-        }
-
-        // Specification for check sum is only the last to digits
-        return checksum & 0xff; // Anding for the 8 least significant bits
-    }
-
-
 
     public void sendData(int[] data) {
         try {
@@ -51,9 +40,10 @@ public class NetConnector {
         }
     }
 
-    private void receiveData(int ackLength) {
+    private byte[] receiveData(int ackLength) {
+        byte[] buffer = new byte[ackLength];
+
         try {
-            byte[] buffer = new byte[ackLength];
             //debugPrint("..Waiting to read data");
             int bytesRead = netIn.read(buffer, 0, ackLength);
             //debugPrint("received " + bytesRead + " bytes of data: " + printByteArray(buffer), true);
@@ -61,5 +51,6 @@ public class NetConnector {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return buffer;
     }
 }

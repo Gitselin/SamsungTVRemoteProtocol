@@ -33,4 +33,8 @@ public class DataPair {
     public int[] getDataValues() {
         return DATAVALUES;
     }
+
+    public void setDataValueByIndex(int index, int newValue) {
+        DATAVALUES[index] = newValue;
+    }
 }

@@ -18,7 +18,7 @@ public class ProtocolFunction {
         varEncodingKeys = new ArrayList<>();
     }
 
-
+    // Build register of array positions for variable dataValues that we need to be able to set
     private int[] buildRequestVarPos(int[] dataValues) {
         ArrayList<Integer> buffer = new ArrayList<>();
 
@@ -36,5 +36,22 @@ public class ProtocolFunction {
             ints[i] = buffer.get(i);
         }
         return ints;
+    }
+
+    public int[] getRequestInts() {
+        // TODO - Custom Exception - throw error if any datavalues are -1 (means that some data variables have not been set)
+        int[] request = this.request.getDataValues();
+        request[request.length-1] = calcChecksum(request);
+        return request;
+    }
+
+    private int calcChecksum(int[] data) {
+        int checksum = 0;//commandType + id + dataLength + dataValue;
+        for (int i = 1; i < data.length-1; i++) { // skip first and last (header and checksum positions)
+            checksum += data[i];
+        }
+
+        // Specification for check sum is only the last to digits
+        return checksum & 0xff; // Anding for the 8 least significant bits
     }
 }
