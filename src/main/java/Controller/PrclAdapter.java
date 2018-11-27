@@ -1,6 +1,6 @@
 package Controller;
 
-public class PtclAdapter implements iPtclAdapter {
+public class PrclAdapter implements iPrclAdapter {
 
     // abstract? do we need to make instance
     // Or static methods?

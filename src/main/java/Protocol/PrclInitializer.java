@@ -1,6 +1,6 @@
 package Protocol;
 
-public class ProtocolInitializer {
+public class PrclInitializer {
 
     // TODO - Hardcoded for now, data should be loaded from JSON
     private final String[] requestStructure = {
@@ -19,7 +19,7 @@ public class ProtocolInitializer {
     };
 
 
-    public ProtocolInitializer() {
+    public PrclInitializer() {
         // TODO - Read from JSON and create DataPair objects
     }
 

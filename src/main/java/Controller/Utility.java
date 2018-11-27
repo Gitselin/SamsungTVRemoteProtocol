@@ -46,7 +46,7 @@ public abstract class Utility {
         return b & 0xff; // Anding least significant 8 bits to get unsigned value
     }
 
-    // TODO - byte array to int array using above
+    // byte array to int array using above
     public static int[] byteArrayToUnsignedIntArray(byte[] bytes) {
         int[] ints = new int[bytes.length];
         for (int i = 0; i < bytes.length; i++) {
@@ -55,7 +55,7 @@ public abstract class Utility {
         return ints;
     }
 
-    // todo - Parse String hex to int
+    // Parse String hex to int
     public static int hexStringToInt(String hex) {
         return Integer.parseInt(hex);
     }

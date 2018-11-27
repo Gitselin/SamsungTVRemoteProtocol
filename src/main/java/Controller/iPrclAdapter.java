@@ -1,6 +1,6 @@
 package Controller;
 
-public interface iPtclAdapter {
+public interface iPrclAdapter {
 
     String[] getRequestKeys();
 
