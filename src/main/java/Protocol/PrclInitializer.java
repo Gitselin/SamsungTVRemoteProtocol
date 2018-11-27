@@ -1,26 +1,21 @@
 package Protocol;
 
-public class PrclInitializer {
+import java.util.HashMap;
 
-    // TODO - Hardcoded for now, data should be loaded from JSON
-    private final String[] requestStructure = {
-            "header",
-            "command",
-            "id",
-            "data length",
-            "checksum"
-    };
-    private final int[] requestValues = {
-            0xAA,
-            0x04,
-            -1,
-            0x0A,
-            -1,
-    };
+public abstract class PrclInitializer {
 
+    // load json protocol data and save to HashMap using "request key"
+    // to pair with PrclFunction object
+    public static HashMap<String, PrclFunction> loadJsonData() {
+        HashMap<String, PrclFunction>
+    }
 
-    public PrclInitializer() {
-        // TODO - Read from JSON and create DataPair objects
+    public static String[] loadRequestKeyes() {
+        // Read request keys from config and return
+    }
+
+    private static String[] loadConfigData() {
+        // load json protocol filenames
     }
 
 }

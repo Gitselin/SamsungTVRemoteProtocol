@@ -14,7 +14,7 @@ public class MWTestDriver {
         try {
 
             while(keepRunning) { // infinite loop just for this test
-
+                /*
                 if (hasNewRequest) {
                     sendData(intTest);
                     hasNewRequest = false;
@@ -22,7 +22,7 @@ public class MWTestDriver {
                     //hasNewRequest = false;
                     receiveData();
                 }
-
+                */
                 Thread.sleep(10);
             }
             // terminate actions
