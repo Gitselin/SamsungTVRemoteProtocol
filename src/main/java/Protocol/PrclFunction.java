@@ -51,7 +51,7 @@ public class PrclFunction {
             checksum += data[i];
         }
 
-        // Specification for check sum is only the last to digits
+        // Specification for checksum is only the last to digits
         return checksum & 0xff; // Anding for the 8 least significant bits
     }
 }
