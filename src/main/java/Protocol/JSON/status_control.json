@@ -1,5 +1,5 @@
 {
-  "Version": "StructureDraft-v0.2",
+  "Version": "StructureDraft-v0.4",
   "Status Control": {
     "Description": "Personal Computer shows current settings for the tv",
     "Status-Get Status function": {

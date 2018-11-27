@@ -1,9 +1,17 @@
 package Controller;
 
-public class PrclAdapter implements iPrclAdapter {
+import Protocol.PrclFunction;
 
-    // abstract? do we need to make instance
-    // Or static methods?
+import java.util.HashMap;
+
+public class PrclAdapter implements iPrclAdapter {
+    private HashMap<String, PrclFunction> requests;
+
+
+    public PrclAdapter() {
+        // run PrclInitializer and build Prcl HashMap
+        // requests = run initializer
+    }
 
     @Override
     public String[] getRequestKeys() {
@@ -12,9 +20,20 @@ public class PrclAdapter implements iPrclAdapter {
     }
 
     @Override
-    public boolean sendRequest(String requestKey) {
+    public boolean sendRequest(String requestKey, int[] variableData) {
         // TODO - Case Switch by requestKey (valid keys defined in config.json)
+        // The switch should contain an entry for all implemented protocol requests
+        switch (requestKey) {
+            case "Get Request": {
+                processGetStatus(variableData);
+            }
+        }
+
         return false;
+    }
+
+    private void processGetStatus(int[] variableData) {
+
     }
 
 

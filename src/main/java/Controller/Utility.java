@@ -1,5 +1,13 @@
 package Controller;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
 public abstract class Utility {
 
     private static boolean debugMode = true;
@@ -65,5 +73,16 @@ public abstract class Utility {
      *  Misc Utility
      */
 
-    // TODO - Generic read from JSON
+    // Generic read from JSON
+    // based on example: https://www.mkyong.com/java/json-simple-example-read-and-write-json/
+    public static JSONObject readJsonFile(String filePath)
+        throws ParseException, IOException { // deal with these in the other end
+        JSONParser parser = new JSONParser();
+
+        Object obj = parser.parse(new FileReader(filePath));
+
+        JSONObject jObj = (JSONObject) obj;
+
+        return jObj;
+    }
 }
