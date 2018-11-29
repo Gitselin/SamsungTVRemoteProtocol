@@ -12,7 +12,8 @@ import java.util.HashMap;
 import static Controller.Utility.*;
 
 public class Controller {
-    private static final String CONFIG_PATH = "Protocol/JSON/config.json"; // path for JSON-files
+    private static final String JSON_PATH = "Protocol/JSON/"; // path for JSON-files
+    private static final String CONFIG_PATH = JSON_PATH + "config.json";
 
     // Config variables
     private final String IP;
@@ -37,7 +38,8 @@ public class Controller {
             LOAD_LIST = jsonArrayToStringArray((JSONArray) config.get("load list"));
             KEY_LIST = jsonArrayToStringArray((JSONArray) config.get("key list"));
 
-            // TODO - build prclLibrary from PrclInitializer method call
+            // build prclLibrary from PrclInitializer method call
+            prclLibrary = PrclInitializer.loadJsonData(LOAD_LIST, KEY_LIST, JSON_PATH);
     }
 
     /*
