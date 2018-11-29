@@ -1,6 +1,6 @@
 package Controller;
 
-import Protocol.PrclFunction;
+import Protocol.PrclSchema;
 import Protocol.PrclInitializer;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -21,7 +21,7 @@ public class Controller {
     private final String[] LOAD_LIST;
     private final String[] KEY_LIST;
 
-    private static HashMap<String, PrclFunction> prclLibrary;
+    private static HashMap<String, PrclSchema> prclLibrary;
 
     public static void main(String[] args) {
         DbAdapter.createNewDatabase("Tester");

@@ -24,7 +24,7 @@ public class MWTestDriver {
                     receiveData();
                 }
                 */
-                Thread.sleep(10);
+                Thread.sleep(SLEEP_TIME_MS);
             }
             // terminate actions
             // - DB logging finish up, etc.

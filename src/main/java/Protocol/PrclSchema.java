@@ -3,14 +3,14 @@ package Protocol;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class PrclFunction {
+public class PrclSchema {
     private DataPair request;
     private DataPair ack;
     private DataPair nak;
     private int[] requestVarPos; // array of positions for variable data that needs to be generated
     private ArrayList<HashMap<Integer, String>> varEncodingKeys; // for all the variable ack values have a hashmap to convert value to key
 
-    public PrclFunction(DataPair request, DataPair ack, DataPair nak) {
+    public PrclSchema(DataPair request, DataPair ack, DataPair nak) {
         this.request = request;
         this.ack = ack;
         this.nak = nak;
