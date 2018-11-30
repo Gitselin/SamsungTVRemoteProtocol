@@ -78,7 +78,12 @@ public abstract class Utility {
 
     // Parse String hex to int
     public static int hexStringToInt(String hex) {
-        return Integer.parseInt(hex);
+        debugPrint("As string: " + hex);
+        if (hex.startsWith("0x")) {
+            hex = hex.substring(2);
+            debugPrint("Filtered String: " + hex);
+        }
+        return Integer.parseInt(hex, 16);
     }
 
     public static String[] jsonArrayToStringArray(JSONArray jArr) {

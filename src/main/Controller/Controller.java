@@ -13,7 +13,7 @@ import java.util.HashMap;
 import static Controller.Utility.*;
 
 public class Controller {
-    private static final String JSON_PATH = "JSON/"; // path for JSON-files
+    private static final String JSON_PATH = "res/JSON/"; // path for JSON-files
     private static final String CONFIG_PATH = JSON_PATH + "config.json";
 
     // Config variables
