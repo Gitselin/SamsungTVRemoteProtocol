@@ -8,6 +8,9 @@
 
 package Protocol;
 
+import java.util.Arrays;
+import static Controller.Utility.toStringIntArray;
+
 public class DataPair {
     private final String[] DATASTRUCTURE;
     private final int[] DATAVALUES;
@@ -36,5 +39,9 @@ public class DataPair {
 
     public void setDataValueByIndex(int index, int newValue) {
         DATAVALUES[index] = newValue;
+    }
+
+    public String toString() {
+        return Arrays.deepToString(DATASTRUCTURE) + '\n' + toStringIntArray(DATAVALUES) + '\n';
     }
 }

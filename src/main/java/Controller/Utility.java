@@ -38,6 +38,18 @@ public abstract class Utility {
         return s;
     }
 
+    public static String toStringIntArray(int[] ints) {
+        String s = "[";
+        for (int i = 0; i < ints.length; i++) {
+            if (i < ints.length-1) {
+                s = s + ints[i] + ",";
+            } else {
+                s = s + ints[i] + "]";
+            }
+        }
+        return s;
+    }
+
     /*
      *  Utility conversion methods
      */
