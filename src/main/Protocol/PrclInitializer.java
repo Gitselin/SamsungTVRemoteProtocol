@@ -7,6 +7,7 @@ import org.json.simple.parser.ParseException;
 import static Controller.Utility.*;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public abstract class PrclInitializer {
@@ -45,25 +46,30 @@ public abstract class PrclInitializer {
         return prclData;
     }
 
-    private static int[] parseJsonValueField(JSONObject jsonObject, String[] keys) {
-        int[] values = new int[jsonObject.size()];
+    private static int[] parseJsonValueField(JSONObject dataField, String[] keys) {
+        debugPrint("Keys for data parsing: " + Arrays.deepToString(keys));
+        int[] values = new int[dataField.size()];
         for (int i = 0; i < values.length; i++) {
-            String str = (String) jsonObject.get(keys[i]);
-
+            String str = (String) dataField.get(keys[i]);
+            debugPrint("Switch on: " + str);
             switch (str) {
                 case "null":
+                    debugPrint("Case: null");
                     values[i] = -1; // signifying that this is a variable field
                     break;
 
                 case "A":
+                    debugPrint("Case: A");
                     values[i] = 65; // Char 'A' - hex 41, decimal 65
                     break;
 
                 case "N":
+                    debugPrint("Case: N");
                     values[i] = 78; // Char 'N' - hex 4E, decimal 78
                     break;
 
                 default:
+                    debugPrint("Case: default");
                     values[i] = hexStringToInt(str); // parse to int
                     break;
             }
@@ -81,10 +87,11 @@ public abstract class PrclInitializer {
 
     private static DataPair makeDataPair(JSONObject data, String structKey, String valueKey) {
         JSONArray dataStruct = (JSONArray) data.get(structKey);
-        JSONObject dataObj = (JSONObject) data.get(valueKey);
+        JSONObject dataValues = (JSONObject) data.get(valueKey);
 
         String[] strStruct = jsonArrayToStringArray(dataStruct);
-        int[] values = parseJsonValueField(dataObj, strStruct);
+        debugPrint("jsonArrayToStringArrayDebug: " + Arrays.deepToString(strStruct));
+        int[] values = parseJsonValueField(dataValues, strStruct);
 
         return new DataPair(strStruct, values);
     }

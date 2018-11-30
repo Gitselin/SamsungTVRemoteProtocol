@@ -40,6 +40,7 @@
     "Nak Values": {
       "header": "0xAA",
       "command": "0xFF",
+      "id": "null",
       "data length": "3",
       "ack/nak": "N",
       "r-CMD": "0x00",

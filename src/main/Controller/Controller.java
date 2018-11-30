@@ -38,7 +38,7 @@ public class Controller {
             SCREEN_ID = hexStringToInt((String) config.get("Screen ID"));
             LOAD_LIST = jsonArrayToStringArray((JSONArray) config.get("load list"));
             KEY_LIST = jsonArrayToStringArray((JSONArray) config.get("key list"));
-
+            debugPrint("Config loading complete..");
             // build prclLibrary from PrclInitializer method call
             prclLibrary = PrclInitializer.loadJsonData(LOAD_LIST, KEY_LIST, JSON_PATH);
     }
