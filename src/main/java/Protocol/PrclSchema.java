@@ -54,4 +54,8 @@ public class PrclSchema {
         // Specification for checksum is only the last to digits
         return checksum & 0xff; // Anding for the 8 least significant bits
     }
+
+    public String toString() {
+        return request.toString() + '\n' + ack.toString() + '\n' + nak.toString();
+    }
 }

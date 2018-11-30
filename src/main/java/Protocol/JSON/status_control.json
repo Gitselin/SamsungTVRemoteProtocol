@@ -51,6 +51,7 @@
       "1": "other (just defined as: etc.)"
     },
     "Definitions": {
+      "Keys": ["Power", "Volume", "Mute", "Input", "Aspect"],
       "Power": {
         "ReplaceValue": true,
         "Data":[0, 1],

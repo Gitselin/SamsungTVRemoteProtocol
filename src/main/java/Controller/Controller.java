@@ -7,12 +7,13 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import static Controller.Utility.*;
 
 public class Controller {
-    private static final String JSON_PATH = "Protocol/JSON/"; // path for JSON-files
+    private static final String JSON_PATH = "JSON/"; // path for JSON-files
     private static final String CONFIG_PATH = JSON_PATH + "config.json";
 
     // Config variables
@@ -42,19 +43,23 @@ public class Controller {
             prclLibrary = PrclInitializer.loadJsonData(LOAD_LIST, KEY_LIST, JSON_PATH);
     }
 
-    /*
-    public static void loadConfig() {
-        try {
-            JSONObject config = readJsonFile(CONFIG_PATH);
-            config = (JSONObject) config.get("Protocol Settings");
-            IP = (String) config.get("IP");
+    public HashMap<String, PrclSchema> getPrclLibrary() {
+        return prclLibrary;
+    }
 
-        } catch (ParseException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }*/
+    public String[] getConfigForDebug() {
+        return new String[] {IP, Integer.toString(PORT), Integer.toString(SCREEN_ID), Arrays.deepToString(LOAD_LIST), Arrays.deepToString(KEY_LIST)};
+    }
+
+    public String[] getLOAD_LIST() {
+        return LOAD_LIST;
+    }
+
+    public String[] getKEY_LIST() {
+        return KEY_LIST;
+    }
+
+
 
 
 }

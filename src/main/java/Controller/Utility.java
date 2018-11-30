@@ -99,7 +99,7 @@ public abstract class Utility {
     public static JSONObject readJsonFile(String filePath)
         throws ParseException, IOException { // deal with these in the other end
         JSONParser parser = new JSONParser();
-
+        debugPrint("reading config from: " + filePath);
         Object obj = parser.parse(new FileReader(filePath));
 
         JSONObject jObj = (JSONObject) obj;
