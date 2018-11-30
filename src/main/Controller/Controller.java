@@ -26,8 +26,8 @@ public class Controller {
     private static HashMap<String, PrclSchema> prclLibrary;
 
     public static void main(String[] args) {
-        DbAdapter.createNewDatabase("Tester");
-        DbAdapter.connect("Tester");
+        DbAdapter.createNewDatabase("external test");
+        //DbAdapter.connect("Tester");
     }
 
     public Controller()
