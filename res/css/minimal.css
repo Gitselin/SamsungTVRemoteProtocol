@@ -16,6 +16,22 @@
     -fx-text-fill: dimgrey;
 }
 
+.toggle-button
+{
+    -fx-background-color: rgba(221, 221, 221, 0.98);
+    -fx-font-size: 30;
+    -fx-font-family: Arial;
+    -fx-text-fill: dimgrey;
+}
+
+.toggle-button:focused
+{
+    -fx-background-color: rgba(136, 136, 136, 0.98);
+    -fx-font-size: 30;
+    -fx-font-family: Arial;
+    -fx-text-fill: #3a3a3a;
+}
+
 #topBox{
     -fx-background-color: red;
     -fx-text-fill: #4d4d4d;
