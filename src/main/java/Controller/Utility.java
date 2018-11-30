@@ -1,5 +1,6 @@
 package Controller;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -68,9 +69,17 @@ public abstract class Utility {
         return Integer.parseInt(hex);
     }
 
+    public static String[] jsonArrayToStringArray(JSONArray jArr) {
+        String[] strArr = new String[jArr.size()];
+        for (int i = 0; i < jArr.size(); i++) {
+            strArr[i] = (String) jArr.get(i);
+        }
+        return strArr;
+    }
+
 
     /*
-     *  Misc Utility
+     *  JSON Utility
      */
 
     // Generic read from JSON

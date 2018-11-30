@@ -1,11 +1,11 @@
 package Controller;
 
-import Protocol.PrclFunction;
+import Protocol.PrclSchema;
 
 import java.util.HashMap;
 
 public class PrclAdapter implements iPrclAdapter {
-    private HashMap<String, PrclFunction> requests;
+    private HashMap<String, PrclSchema> requests;
 
 
     public PrclAdapter() {
