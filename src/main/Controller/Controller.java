@@ -1,6 +1,5 @@
 package Controller;
 
-import Protocol.PrclSchema;
 import Protocol.PrclInitializer;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -8,7 +7,6 @@ import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.HashMap;
 
 import static Controller.Utility.*;
 
@@ -23,7 +21,9 @@ public class Controller {
     private final String[] LOAD_LIST;
     private final String[] KEY_LIST;
 
-    private static HashMap<String, PrclSchema> prclLibrary;
+    private static iPrclAdapter prclHandler;
+    private static NetConnector network;
+
 
     public static void main(String[] args) {
         DbAdapter.createNewDatabase("external test");
@@ -40,11 +40,8 @@ public class Controller {
             KEY_LIST = jsonArrayToStringArray((JSONArray) config.get("key list"));
             debugPrint("Config loading complete..");
             // build prclLibrary from PrclInitializer method call
-            prclLibrary = PrclInitializer.loadJsonData(LOAD_LIST, KEY_LIST, JSON_PATH);
-    }
-
-    public HashMap<String, PrclSchema> getPrclLibrary() {
-        return prclLibrary;
+            prclHandler = new PrclAdapter(SCREEN_ID, LOAD_LIST, KEY_LIST, JSON_PATH);
+            network = new NetConnector(IP, PORT);
     }
 
     public String[] getConfigForDebug() {

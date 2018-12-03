@@ -1,12 +1,13 @@
 package Controller;
 
+import Protocol.PrclSchema;
+
 public interface iPrclAdapter {
 
     String[] getRequestKeys();
 
-    boolean sendRequest(String requestKey, int[] variableData); // boolean to indicate success
+    int[] buildRequest(String requestKey, int[] variableData); // return object with structure data and actual response data
 
-    // Something to get data ready for display - Maybe custom class for this purpose
 
 
 }

@@ -8,18 +8,20 @@ public class PrclSchema {
     private DataPair ack;
     private DataPair nak;
     private int[] requestVarPos; // array of positions for variable data that needs to be generated
-    private ArrayList<HashMap<Integer, String>> varEncodingKeys; // for all the variable ack values have a hashmap to convert value to key
+    private int[] ackVarPos;
+    private ArrayList<HashMap<Integer, DataPair>> varEncodingKeys; // for all the variable ack values have a hashmap to convert value to key
 
     public PrclSchema(DataPair request, DataPair ack, DataPair nak) {
         this.request = request;
         this.ack = ack;
         this.nak = nak;
-        requestVarPos = buildRequestVarPos(request.getDataValues());
+        requestVarPos = buildVarPositions(request.getDataValues());
+        ackVarPos = buildVarPositions(ack.getDataValues());
         varEncodingKeys = new ArrayList<>();
     }
 
     // Build register of array positions for variable dataValues that we need to be able to set
-    private int[] buildRequestVarPos(int[] dataValues) {
+    private int[] buildVarPositions(int[] dataValues) {
         ArrayList<Integer> buffer = new ArrayList<>();
 
         // Get index positions for values equal to -1 (signifying variable data field)
@@ -38,21 +40,22 @@ public class PrclSchema {
         return ints;
     }
 
-    public int[] getRequestInts() {
-        // TODO - Custom Exception - throw error if any datavalues are -1 (means that some data variables have not been set)
-        int[] request = this.request.getDataValues();
-        request[request.length-1] = calcChecksum(request);
+
+
+    public DataPair getRequest() {
         return request;
     }
 
-    private int calcChecksum(int[] data) {
-        int checksum = 0;//commandType + id + dataLength + dataValue;
-        for (int i = 1; i < data.length-1; i++) { // skip first and last (header and checksum positions)
-            checksum += data[i];
-        }
+    public int[] getRequestVarPos() {
+        return requestVarPos;
+    }
 
-        // Specification for checksum is only the last to digits
-        return checksum & 0xff; // Anding for the 8 least significant bits
+    public DataPair getAck() {
+        return ack;
+    }
+
+    public int[] getAckVarPos() {
+        return ackVarPos;
     }
 
     public String toString() {
