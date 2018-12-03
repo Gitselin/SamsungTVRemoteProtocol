@@ -13,8 +13,6 @@ public class PrclAdapter implements iPrclAdapter {
     private final int SCREEN_ID;
 
 
-
-
     public PrclAdapter(int screenID, String[] loadList, String[] keyList, String jsonPath)
         throws ParseException, IOException {
         // run PrclInitializer and build Prcl HashMap
@@ -22,17 +20,12 @@ public class PrclAdapter implements iPrclAdapter {
         SCREEN_ID = screenID;
     }
 
+    // Send a request matched to requestKey. variableData is int array for fields that are variable and likely set by user in GUI
+    // Header etc static fields are handled internally
     @Override
-    public String[] getRequestKeys() {
-
-        return null; // TODO
-    }
-
-    @Override // Send a request matched to requestKey. variableData is int array for fields that are variable and likely set by user in GUI
-              // Header etc static fields are handled internally
-    public int[] buildRequest(String requestKey, int[] variableData) {
+    public int[] parseRequest(String requestKey, int[] variableData) {
         // Case Switch by requestKey (valid keys defined in config.json)
-        // The switch should contain an entry for all implemented protocol requests
+        // The switch should contain an entry for all implemented protocol function
         int[] result;
 
         switch (requestKey) {
@@ -44,10 +37,31 @@ public class PrclAdapter implements iPrclAdapter {
 
             default: {
                 result = null; // Should not happen, included to make it obvious something went wrong if we end here
-                debugPrint("WARNING: sendRequest() switch went to default (in Controller.PrclAdapter)");
+                debugPrint("WARNING: parseRequest() switch went to default (in Controller.PrclAdapter)");
             }
         }
 
+        return result;
+    }
+
+    @Override
+    public String[][] parseResponse(String requestKey, int[] response) {
+        // Case Switch by requestKey (valid keys defined in config.json)
+        // The switch should contain an entry for all implemented protocol function
+        String[][] result;
+
+        switch (requestKey) {
+            case "Get Status": {
+                PrclSchema action = prclLibrary.get("Get Status");
+                result = processResponse(response, action);
+                break;
+            }
+
+            default: {
+                result = null; // Should not happen, included to make it obvious something went wrong if we end here
+                debugPrint("WARNING: parseResponse() switch went to default (in Controller.PrclAdapter)");
+            }
+        }
         return result;
     }
 
@@ -66,6 +80,15 @@ public class PrclAdapter implements iPrclAdapter {
         return result;
     }
 
+    private String[][] processResponse(int[] response, PrclSchema action) {
+        // 2D String array package for data structure and converted response data
+        String[][] ackData = new String[2][action.getAck().getDataValues().length]; // hard 2 slots for structure and data
+        ackData[0] = action.getAck().getDataStructure();
+        ackData[1] = intArrayToHexStringArray(response);
+
+        return ackData;
+    }
+
 
     private int calcChecksum(int[] data) {
         int checksum = 0;//commandType + id + dataLength + dataValue;
@@ -76,7 +99,5 @@ public class PrclAdapter implements iPrclAdapter {
         // Specification for checksum is only the last to digits
         return checksum & 0xff; // Anding for the 8 least significant bits
     }
-
-
 
 }

@@ -14,11 +14,20 @@ import static Controller.Utility.toStringIntArray;
 public class DataPair {
     private final String[] DATASTRUCTURE;
     private final int[] DATAVALUES;
+    private final int DATALENGTH;
 
     public DataPair(String[] dataStructure, int[] dataValues) {
         // TODO - Throw error if not same length (custom exception)
         this.DATASTRUCTURE = dataStructure;
         this.DATAVALUES = dataValues;
+        int lengthPos = -1; // force OutOfBounds if not found
+        for (int i = 0; i < DATASTRUCTURE.length; i++) {
+            if (DATASTRUCTURE[i].equals("data length")) {
+                lengthPos = i;
+                break;
+            }
+        }
+        DATALENGTH = DATAVALUES[lengthPos];
     }
 
     public String getDataType(int position) {
@@ -39,6 +48,10 @@ public class DataPair {
 
     public void setDataValueByIndex(int index, int newValue) {
         DATAVALUES[index] = newValue;
+    }
+
+    public int getDataLength() {
+        return DATALENGTH;
     }
 
     public String toString() {

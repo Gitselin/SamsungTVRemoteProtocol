@@ -5,7 +5,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -92,6 +91,14 @@ public abstract class Utility {
             strArr[i] = (String) jArr.get(i);
         }
         return strArr;
+    }
+
+    public static String[] intArrayToHexStringArray(int[] ints) {
+        String[] str = new String[ints.length];
+        for (int i = 0; i < ints.length; i++) {
+            str[i] = Integer.toHexString(ints[i]);
+        }
+        return str;
     }
 
 
