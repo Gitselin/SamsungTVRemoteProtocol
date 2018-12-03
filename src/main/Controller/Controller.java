@@ -18,6 +18,7 @@ public class Controller {
     private final String IP;
     private final int PORT;
     private final int SCREEN_ID;
+    private final int NET_READ_DELAY_MS = 10;
     private final String[] LOAD_LIST;
     private final String[] KEY_LIST;
 
@@ -41,7 +42,15 @@ public class Controller {
             debugPrint("Config loading complete..");
             // build prclLibrary from PrclInitializer method call
             prclHandler = new PrclAdapter(SCREEN_ID, LOAD_LIST, KEY_LIST, JSON_PATH);
-            network = new NetConnector(IP, PORT);
+            network = new NetConnector(IP, PORT, NET_READ_DELAY_MS);
+    }
+
+    public String[][] sendRequest(String requestKey, int[] varData)
+        throws IOException, InterruptedException {
+        int[] fullData = prclHandler.parseRequest(requestKey, varData);
+        byte[] response = network.sendData(fullData, prclHandler.getFullAckLength(requestKey));
+
+        return prclHandler.parseResponse(requestKey, byteArrayToUnsignedIntArray(response));
     }
 
     public String[] getConfigForDebug() {

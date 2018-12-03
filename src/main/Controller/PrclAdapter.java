@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 public class PrclAdapter implements iPrclAdapter {
+    private final int BASE_ACK_LENGTH = 5;
     private HashMap<String, PrclSchema> prclLibrary;
     private final int SCREEN_ID;
 
@@ -63,6 +64,11 @@ public class PrclAdapter implements iPrclAdapter {
             }
         }
         return result;
+    }
+
+    @Override
+    public int getFullAckLength(String requestKey) {
+        return BASE_ACK_LENGTH + prclLibrary.get(requestKey).getAck().getDataLength();
     }
 
     private int[] processRequest(int[] variableData, PrclSchema action) {
