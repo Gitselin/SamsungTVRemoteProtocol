@@ -28,11 +28,6 @@ public class Controller {
     private static NetConnector network;
 
 
-    public static void main(String[] args) {
-        DbAdapter.createNewDatabase("external test");
-        //DbAdapter.connect("Tester");
-    }
-
     public Controller()
         throws ParseException, IOException {
             JSONObject config = PrclInitializer.loadConfigData(CONFIG_PATH);

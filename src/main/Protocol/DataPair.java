@@ -30,24 +30,13 @@ public class DataPair {
         DATALENGTH = DATAVALUES[lengthPos];
     }
 
-    public String getDataType(int position) {
-        return DATASTRUCTURE[position];
-    }
 
     public String[] getDataStructure() {
         return DATASTRUCTURE;
     }
 
-    public int getDataValue(int position) {
-        return DATAVALUES[position];
-    }
-
     public int[] getDataValues() {
         return DATAVALUES;
-    }
-
-    public void setDataValueByIndex(int index, int newValue) {
-        DATAVALUES[index] = newValue;
     }
 
     public int getDataLength() {
@@ -57,4 +46,22 @@ public class DataPair {
     public String toString() {
         return Arrays.deepToString(DATASTRUCTURE) + '\n' + toStringIntArray(DATAVALUES) + '\n';
     }
+
+
+
+    /* OLD MATHODS _ MAYBE USEFULL LATER
+    public String getDataType(int position) {
+        return DATASTRUCTURE[position];
+    }
+
+    public int getDataValue(int position) {
+        return DATAVALUES[position];
+    }
+
+    public void setDataValueByIndex(int index, int newValue) {
+        DATAVALUES[index] = newValue;
+    }
+
+
+     */
 }
