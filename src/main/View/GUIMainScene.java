@@ -1,5 +1,6 @@
 package View;
 
+import Controller.Controller;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -18,12 +19,16 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Pair;
+import org.json.simple.parser.ParseException;
 import sun.reflect.generics.tree.Tree;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.invoke.SwitchPoint;
+import java.net.ConnectException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 public class GUIMainScene extends Application {
@@ -33,48 +38,55 @@ public class GUIMainScene extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("[Screen Name]");
-
-        ArrayList<BorderPane> settings = new ArrayList<>(getPanels()); //Generate Settings
-
-        FlowPane settingsPane = new FlowPane(Orientation.VERTICAL,64,16); //Setup Settings pane
-        settingsPane.setAlignment(Pos.CENTER);
-        settingsPane.getChildren().addAll(settings);
-        settingsPane.setId("sp1");
-
-        ArrayList<BorderPane> settings1 = new ArrayList<>(getPanels()); //Generate Settings TODO this is a copy, replace this
-
-        FlowPane settingsPane1 = new FlowPane(Orientation.VERTICAL,64,16); //Setup Settings pane
-        settingsPane1.setAlignment(Pos.CENTER);
-        settingsPane1.getChildren().addAll(settings1);
-        settingsPane1.setId("sp2");
+        String testResponse = "null";
+        ArrayList<String> statusTexts = new ArrayList<>();
+        try {
+            Controller ctrl = new Controller();
+            String[] keylist = ctrl.getKEY_LIST();
+            String keyToSend = keylist[0];
+            String[][] response = ctrl.sendRequestNoVars(keyToSend);
+            testResponse = Arrays.deepToString(response[1]);
+            statusTexts.addAll(Arrays.asList(response[1]).subList(6, Integer.parseInt(response[1][3]) + 4));
+        } catch (ParseException | InterruptedException | IOException e){
+            e.printStackTrace();
+        }
 
 
-        ArrayList<BorderPane> settings2 = new ArrayList<>(getPanels()); //Generate Settings TODO this is a copy, replace this
+
+        primaryStage.setTitle("Screen Controller - ME46C");
+
+        ArrayList<BorderPane> maintenancePanels = new ArrayList<>(getPanels()); //Generate Settings
+
+        FlowPane maintenancePane = new FlowPane(Orientation.VERTICAL,64,16); //Setup Settings pane
+        maintenancePane.setAlignment(Pos.CENTER);
+        maintenancePane.getChildren().addAll(maintenancePanels);
+        maintenancePane.setId("sp1");
+
+        ArrayList<BorderPane> picturePanels = new ArrayList<>(getPanels()); //Generate Settings TODO this is a copy, replace this
+
+        FlowPane picturePane = new FlowPane(Orientation.VERTICAL,64,16); //Setup Settings pane
+        picturePane.setAlignment(Pos.CENTER);
+        picturePane.getChildren().addAll(picturePanels);
+        picturePane.setId("sp2");
+
+
+        ArrayList<BorderPane> miscPanels = new ArrayList<>(getPanels()); //Generate Settings TODO this is a copy, replace this
 
         FlowPane settingsPane2 = new FlowPane(Orientation.VERTICAL,64,16); //Setup Settings pane
         settingsPane2.setAlignment(Pos.CENTER);
-        settingsPane2.getChildren().addAll(settings2);
+        settingsPane2.getChildren().addAll(miscPanels);
         settingsPane2.setId("sp3");
 
 
-        ArrayList<BorderPane> settings3 = new ArrayList<>(getPanels()); //Generate Settings TODO this is a copy, replace this
+        ArrayList<BorderPane> dbPanels = new ArrayList<>(getPanels()); //Generate Settings TODO this is a copy, replace this
 
-        FlowPane settingsPane3 = new FlowPane(Orientation.VERTICAL,64,16); //Setup Settings pane
-        settingsPane3.setAlignment(Pos.CENTER);
-        settingsPane3.getChildren().addAll(settings3);
-        settingsPane3.setId("sp4");
-
-
-        ArrayList<BorderPane> settings4 = new ArrayList<>(getPanels()); //Generate Settings TODO this is a copy, replace this
-
-        FlowPane settingsPane4 = new FlowPane(Orientation.VERTICAL,64,16); //Setup Settings pane
-        settingsPane4.setAlignment(Pos.CENTER);
-        settingsPane4.getChildren().addAll(settings4);
-        settingsPane4.setId("sp5");
+        FlowPane dbPane = new FlowPane(Orientation.VERTICAL,64,16); //Setup Settings pane
+        dbPane.setAlignment(Pos.CENTER);
+        dbPane.getChildren().addAll(dbPanels);
+        dbPane.setId("sp4");
 
         StackPane settingsPanes = new StackPane();
-        settingsPanes.getChildren().addAll(settingsPane,settingsPane1,settingsPane2,settingsPane3,settingsPane4);
+        settingsPanes.getChildren().addAll(maintenancePane,picturePane,settingsPane2,dbPane);
         for(Node node: settingsPanes.getChildren()){
             if (node.getId().equals("sp1")){
                 node.setVisible(true);
@@ -83,38 +95,44 @@ public class GUIMainScene extends Application {
             }
         }
 
-        Label csInfoLabel = new Label("Current Screen"); //Setup top labels
+        Label csInfoLabel = new Label(testResponse); //Setup top labels
         Label screenText = new Label("ME46C");
-        Label powerInfo = new Label("Current Power status: Screen Turned on for 2h 34m");
+        Label powerInfo = new Label("Current Power status: Screen Turned on for 2h 34m /n New line");
+
+        TextArea statusArea = new TextArea();
+        statusArea.setEditable(false);
+        statusArea.setPrefSize(128,128);
+        statusArea.setWrapText(true);
+        for(int i = 0; i < statusTexts.size(); i++){
+            statusArea.appendText("Val " + (i+1) + ": " + statusTexts.get(i));
+            if (i+1!=statusTexts.size()){
+                statusArea.appendText("\n");
+            }
+        }
+
 
         ToggleGroup toggleGroup = new ToggleGroup(); //Setup of toggle buttons
 
-        ToggleButton powerMenu = new ToggleButton("Power");
-        powerMenu.setPrefSize(256,64);
-        powerMenu.setToggleGroup(toggleGroup);
-        powerMenu.setUserData(settingsPane.getId());
-        powerMenu.setSelected(true);
+        ToggleButton maintenanceButton = new ToggleButton("Maintenance");
+        maintenanceButton.setPrefSize(256,64);
+        maintenanceButton.setToggleGroup(toggleGroup);
+        maintenanceButton.setUserData(maintenancePane.getId());
+        maintenanceButton.setSelected(true);
 
-        ToggleButton statusMenu = new ToggleButton("Status");
-        statusMenu.setPrefSize(256,64);
-        statusMenu.setToggleGroup(toggleGroup);
-        statusMenu.setUserData(settingsPane1.getId());
+        ToggleButton pictureButton = new ToggleButton("Picture");
+        pictureButton.setPrefSize(256,64);
+        pictureButton.setToggleGroup(toggleGroup);
+        pictureButton.setUserData(picturePane.getId());
 
-        ToggleButton advancedMenu = new ToggleButton("Advanced Control");
-        advancedMenu.setPrefSize(256,64);
-        advancedMenu.setToggleGroup(toggleGroup);
-        advancedMenu.setUserData(settingsPane2.getId());
+        ToggleButton miscButton = new ToggleButton("Miscellaneous");
+        miscButton.setPrefSize(256,64);
+        miscButton.setToggleGroup(toggleGroup);
+        miscButton.setUserData(settingsPane2.getId());
 
-        ToggleButton dbButton = new ToggleButton("Access DB logs");
+        ToggleButton dbButton = new ToggleButton("Database");
         dbButton.setPrefSize(256,64);
         dbButton.setToggleGroup(toggleGroup);
-        dbButton.setUserData(settingsPane3.getId());
-
-        //TODO Save changes shouldn't be a menu option
-        ToggleButton SaveChangesButton = new ToggleButton("Save Changes");
-        SaveChangesButton.setPrefSize(256,64);
-        SaveChangesButton.setToggleGroup(toggleGroup);
-        SaveChangesButton.setUserData(settingsPane4.getId());
+        dbButton.setUserData(dbPane.getId());
 
         toggleGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() { //Toggle listner
             @Override
@@ -145,12 +163,13 @@ public class GUIMainScene extends Application {
 
         HBox buttonBox = new HBox(); //Setup of button components
         buttonBox.setAlignment(Pos.CENTER);
-        buttonBox.getChildren().addAll(powerMenu,statusMenu,advancedMenu,dbButton,SaveChangesButton);
+        buttonBox.getChildren().addAll(maintenanceButton,pictureButton,miscButton,dbButton);
         buttonBox.setSpacing(16);
 
         BorderPane topPane = new BorderPane(); //Top pane for Info labels and buttons
-        topPane.setTop(topBox);
+        //topPane.setLeft(topBox);
         topPane.setBottom(buttonBox);
+        topPane.setTop(statusArea);
         topPane.setStyle("-fx-background-color: #eaeaea"); //TODO Access by ID instead
 
         BorderPane root = new BorderPane(); //Setting up Root pane
