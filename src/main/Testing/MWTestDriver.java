@@ -23,10 +23,12 @@ public class MWTestDriver {
         try {
             Controller ctrl = new Controller();
             String[] keyList = ctrl.getKEY_LIST();
+            String keyToSend = keyList[0];
+            debugPrint("Protocol function key: " + keyToSend);
+            String[][] response = ctrl.sendRequestNoVars(keyToSend);
 
-            String[][] response = ctrl.sendRequestNoVars(keyList[0]);
-
-            debugPrint("Response: " + Arrays.deepToString(response[1]));
+            //debugPrint("Response: " + Arrays.deepToString(response[1]));
+            System.out.println("Response: " + Arrays.deepToString(response[1]));
             /*
             while(keepRunning) { // infinite loop just for this test
 

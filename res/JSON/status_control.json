@@ -13,7 +13,7 @@
     "Request Structure": ["header", "command", "id", "data length", "checksum"],
     "Request Values": {
       "header": "0xAA",
-      "command": "0xFF",
+      "command": "0x00",
       "id": "null",
       "data length": "0",
       "checksum": "null"

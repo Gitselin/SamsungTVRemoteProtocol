@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Arrays;
 
 import static Controller.Utility.*;
 
@@ -28,14 +29,15 @@ public class NetConnector {
 
     public byte[] sendData(int[] fullData, int ackLength)
         throws IOException, InterruptedException {
-
+        //debugPrint("Sending: " + Arrays.deepToString(intArrayToHexStringArray(fullData)) + " with expected response length: " + ackLength);
+        System.out.println("Sending: " + Arrays.deepToString(intArrayToHexStringArray(fullData)) + " with expected response length: " + ackLength);
         for (int i : fullData) {
             netOut.writeByte(i);
             //debugPrint("Send data: " + i);
         }
         netOut.flush();
 
-        Thread.sleep(READ_DELAY);
+        //Thread.sleep(READ_DELAY);
 
         return receiveData(ackLength);
 
