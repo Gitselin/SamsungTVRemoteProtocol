@@ -6,9 +6,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -16,16 +13,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.util.Pair;
 import org.json.simple.parser.ParseException;
-import sun.reflect.generics.tree.Tree;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.invoke.SwitchPoint;
-import java.net.ConnectException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,7 +36,7 @@ public class GUIMainScene extends Application {
             Controller ctrl = new Controller();
             String[] keylist = ctrl.getKEY_LIST();
             String keyToSend = keylist[0];
-            String[][] response = ctrl.sendRequestNoVars(keyToSend);
+            String[][] response = ctrl.sendRequest(keyToSend);
             testResponse = Arrays.deepToString(response[1]);
             statusTexts.addAll(Arrays.asList(response[1]).subList(6, Integer.parseInt(response[1][3]) + 4));
         } catch (ParseException | InterruptedException | IOException e){

@@ -50,7 +50,8 @@ public class Controller {
         return prclHandler.parseResponse(requestKey, byteArrayToUnsignedIntArray(response));
     }
 
-    public String[][] sendRequestNoVars(String key)
+    // Overload of sendRequest() for situations without any variable data
+    public String[][] sendRequest(String key)
         throws InterruptedException, IOException {
         int[] varData = {SCREEN_ID};
         return sendRequest(key,varData);

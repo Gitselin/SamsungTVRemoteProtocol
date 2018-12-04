@@ -25,7 +25,7 @@ public class MWTestDriver {
             String[] keyList = ctrl.getKEY_LIST();
             String keyToSend = keyList[0];
             debugPrint("Protocol function key: " + keyToSend);
-            String[][] response = ctrl.sendRequestNoVars(keyToSend);
+            String[][] response = ctrl.sendRequest(keyToSend);
 
             //debugPrint("Response: " + Arrays.deepToString(response[1]));
             System.out.println("Response: " + Arrays.deepToString(response[1]));
