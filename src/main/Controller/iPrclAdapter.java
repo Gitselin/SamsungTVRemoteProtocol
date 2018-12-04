@@ -1,6 +1,10 @@
 package Controller;
 
 
+import Protocol.PrclSchema;
+
+import java.util.HashMap;
+
 public interface iPrclAdapter {
 
 
@@ -9,6 +13,8 @@ public interface iPrclAdapter {
     String[][] parseResponse(String requestKey, int[] response); // get int array response from NetConnector and parse data according to protocol definitions
 
     int getFullAckLength(String requestKey);
+
+    HashMap<String, PrclSchema> debugGetPrclLibrary();
 
 
 

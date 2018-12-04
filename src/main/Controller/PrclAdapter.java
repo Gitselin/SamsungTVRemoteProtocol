@@ -106,4 +106,13 @@ public class PrclAdapter implements iPrclAdapter {
         return checksum & 0xff; // Anding for the 8 least significant bits
     }
 
+
+    /*
+     *  DEBUG METHODS
+     */
+
+    public HashMap<String, PrclSchema> debugGetPrclLibrary() {
+        return prclLibrary;
+    }
+
 }

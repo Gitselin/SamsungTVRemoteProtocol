@@ -1,12 +1,14 @@
 package Controller;
 
 import Protocol.PrclInitializer;
+import Protocol.PrclSchema;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashMap;
 
 import static Controller.Utility.*;
 
@@ -53,6 +55,12 @@ public class Controller {
         return prclHandler.parseResponse(requestKey, byteArrayToUnsignedIntArray(response));
     }
 
+    public String[][] sendRequestNoVars(String key)
+        throws InterruptedException, IOException {
+        int[] varData = {SCREEN_ID};
+        return sendRequest(key,varData);
+    }
+
     public String[] getConfigForDebug() {
         return new String[] {IP, Integer.toString(PORT), Integer.toString(SCREEN_ID), Arrays.deepToString(LOAD_LIST), Arrays.deepToString(KEY_LIST)};
     }
@@ -63,6 +71,15 @@ public class Controller {
 
     public String[] getKEY_LIST() {
         return KEY_LIST;
+    }
+
+
+    /*
+     *  DEBUG METHODS
+     */
+
+    public HashMap<String, PrclSchema> debugGetPrclLibrary() {
+        return prclHandler.debugGetPrclLibrary();
     }
 
 
