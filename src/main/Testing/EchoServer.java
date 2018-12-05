@@ -5,9 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Arrays;
 
-import static Controller.Utility.intArrayToHexStringArray;
 
 public class EchoServer {
     private static final String IP = "127.0.0.1";
