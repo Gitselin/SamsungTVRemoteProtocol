@@ -37,6 +37,8 @@ public class MWTestDriver {
             // terminate actions
             // - DB logging finish up, etc.
             */
+            Thread.sleep(4000);
+            ctrl.closeNetConnection();
         } catch (ParseException e) {
             e.printStackTrace();
         } catch (IOException e) {

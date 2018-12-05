@@ -43,7 +43,7 @@ public class EchoServer {
     private static void sendData(byte[] fullData, int byteCount)
             throws IOException {
         for (int i = 0; i < byteCount; i++) {
-            netOut.writeByte(i);
+            netOut.writeByte(fullData[i]);
         }
         netOut.flush();
 
