@@ -28,7 +28,7 @@ public class NetConnector {
 
 
     public byte[] sendData(int[] fullData, int ackLength)
-        throws IOException, InterruptedException {
+        throws IOException {
         //debugPrint("Sending: " + Arrays.deepToString(intArrayToHexStringArray(fullData)) + " with expected response length: " + ackLength);
         System.out.println("Sending: " + Arrays.deepToString(intArrayToHexStringArray(fullData)) + " with expected response length: " + ackLength);
         for (int i : fullData) {
@@ -41,6 +41,13 @@ public class NetConnector {
 
         return receiveData(ackLength);
 
+    }
+
+    public void close()
+        throws IOException {
+        netIn.close();
+        netOut.close();
+        socket.close();
     }
 
     private byte[] receiveData(int ackLength)
