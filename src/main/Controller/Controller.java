@@ -31,7 +31,8 @@ public class Controller {
     public Controller()
         throws ParseException, IOException {
             JSONObject config = PrclInitializer.loadConfigData(CONFIG_PATH);
-            IP = (String) config.get("IP");
+            //IP = (String) config.get("IP");
+            IP = "127.0.0.1"; // TODO - DEBUG MAKE SURE TO SET BACK TO JSON READ
             PORT = longToInt((long) config.get("PORT"));
             SCREEN_ID = hexStringToInt((String) config.get("Screen ID"));
             LOAD_LIST = jsonArrayToStringArray((JSONArray) config.get("load list"));

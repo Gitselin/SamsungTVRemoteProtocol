@@ -8,13 +8,13 @@ import java.net.Socket;
 
 
 public class EchoServer {
-    private static final String IP = "127.0.0.1";
     private static final int PORT = 1515;
     private static ServerSocket server;
     private static Socket client;
 
     private static DataInputStream netIn;
     private static DataOutputStream netOut;
+    private static boolean running;
 
     public static void main(String[] args) {
         try {
@@ -23,14 +23,28 @@ public class EchoServer {
 
             netIn = new DataInputStream(client.getInputStream());
             netOut = new DataOutputStream(client.getOutputStream());
+            running = true;
+
+            while (running) {
+                if (client.isConnected()) {
+                    receiveData();
+                    Thread.sleep(10);
+                } else {
+                    client = server.accept();
+                }
+            }
+            close();
+
+
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
-
-
     }
 
-    private void sendData(byte[] fullData, int byteCount)
+
+    private static void sendData(byte[] fullData, int byteCount)
             throws IOException {
         for (int i = 0; i < byteCount; i++) {
             netOut.writeByte(i);
@@ -40,7 +54,7 @@ public class EchoServer {
     }
 
 
-    private void receiveData()
+    private static void receiveData()
             throws IOException {
         byte[] buffer = new byte[256]; // 256 bytes should be enough
 
@@ -50,7 +64,7 @@ public class EchoServer {
 
     }
 
-    public void close()
+    public static void close()
             throws IOException {
         netIn.close();
         netOut.close();
