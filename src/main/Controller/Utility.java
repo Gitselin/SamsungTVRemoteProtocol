@@ -85,6 +85,19 @@ public abstract class Utility {
         return Integer.parseInt(hex, 16);
     }
 
+    public static int[] jsonArrayHexStringToIntArray(JSONArray jArr) {
+        int[] iArr = new int[jArr.size()];
+        String[] data = jsonArrayToStringArray(jArr);
+        for (int i = 0; i < data.length; i++) {
+            if (data[i].equalsIgnoreCase("null") || data[i].equalsIgnoreCase("-1")) {
+                iArr[i] = -1;
+            } else {
+                iArr[i] = hexStringToInt(data[i]);
+            }
+        }
+        return iArr;
+    }
+
     public static String[] jsonArrayToStringArray(JSONArray jArr) {
         String[] strArr = new String[jArr.size()];
         for (int i = 0; i < jArr.size(); i++) {

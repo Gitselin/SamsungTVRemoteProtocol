@@ -77,12 +77,30 @@ public abstract class PrclInitializer {
         return values;
     }
 
+    private static HashMap<String, HashMap<Integer, String>> parseDefinitionsField(JSONObject data) {
+        data = (JSONObject) data.get("Definitions");
+        String[] keys = jsonArrayToStringArray((JSONArray) data.get("Keys"));
+        HashMap<String, HashMap<Integer, String>> result = new HashMap<>();
+
+        for (String s : keys) {
+            JSONObject keyDef = (JSONObject) data.get(s);
+            int[] keyData = jsonArrayHexStringToIntArray((JSONArray) keyDef.get("Data"));
+            String[] keyValue = jsonArrayToStringArray((JSONArray) keyDef.get("Display Value"));
+
+            result.put(s, makeDefValueMap(keyData, keyValue));
+        }
+        return result;
+    }
+
     private static PrclSchema makePrclSchema(JSONObject data) {
         DataPair req = makeDataPair(data, "Request Structure", "Request Values");
         DataPair ack = makeDataPair(data, "Ack Structure", "Ack Values");
         DataPair nak = makeDataPair(data, "Nak Structure", "Nak Values");
+        HashMap<String, HashMap<Integer, String>> definitions = parseDefinitionsField(data);
+        data = (JSONObject) data.get("Definitions");
+        String[] ackKeyDef = jsonArrayToStringArray((JSONArray) data.get("Keys"));
 
-        return new PrclSchema(req, ack, nak);
+        return new PrclSchema(req, ack, nak, definitions, ackKeyDef);
     }
 
     private static DataPair makeDataPair(JSONObject data, String structKey, String valueKey) {
@@ -94,6 +112,16 @@ public abstract class PrclInitializer {
         int[] values = parseJsonValueField(dataValues, strStruct);
 
         return new DataPair(strStruct, values);
+    }
+
+    private static HashMap<Integer, String> makeDefValueMap(int[] value, String[] meaning) {
+        HashMap<Integer, String> ackValueMap = new HashMap<>();
+
+        for (int i = 0; i < value.length; i++) {
+            ackValueMap.put(value[i], meaning[i]);
+        }
+
+        return ackValueMap;
     }
 
 }

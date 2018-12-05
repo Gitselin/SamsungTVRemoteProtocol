@@ -90,7 +90,21 @@ public class PrclAdapter implements iPrclAdapter {
         // 2D String array package for data structure and converted response data
         String[][] ackData = new String[2][action.getAck().getDataValues().length]; // hard 2 slots for structure and data
         ackData[0] = action.getAck().getDataStructure();
-        ackData[1] = intArrayToHexStringArray(response);
+        //ackData[1] = intArrayToHexStringArray(response);
+        HashMap<String, HashMap<Integer, String>> definitions = action.getAckDefinitions();
+        String[] result = new String[ackData[1].length];
+
+        for (int i = 0; i < ackData[0].length; i++) {
+            String key = ackData[0][i];
+            int value = response[i];
+            if (definitions.containsKey(key)) {
+                if (definitions.get(key).size() == 1) { // no conversion needed (json definition set to -1)
+                    result[i] = Integer.toHexString(value);
+                } else {
+                    result[i] = definitions.get(key).get(value);
+                }
+            }
+        }
 
         return ackData;
     }

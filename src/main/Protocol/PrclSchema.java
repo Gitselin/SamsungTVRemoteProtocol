@@ -9,15 +9,17 @@ public class PrclSchema {
     private DataPair nak;
     private int[] requestVarPos; // array of positions for variable data that needs to be generated
     private int[] ackVarPos;
-    private ArrayList<HashMap<Integer, DataPair>> varEncodingKeys; // for all the variable ack values have a hashmap to convert value to key
+    private String[] ackDefKeys;
+    private HashMap<String, HashMap<Integer, String>> ackDefinitions; // for all the variable ack values have a hashmap to convert value to key
 
-    public PrclSchema(DataPair request, DataPair ack, DataPair nak) {
+    public PrclSchema(DataPair request, DataPair ack, DataPair nak, HashMap<String, HashMap<Integer, String>> ackDefinitions, String[] ackDefKeys) {
         this.request = request;
         this.ack = ack;
         this.nak = nak;
         requestVarPos = buildVarPositions(request.getDataValues());
         ackVarPos = buildVarPositions(ack.getDataValues());
-        varEncodingKeys = new ArrayList<>();
+        this.ackDefinitions = ackDefinitions;
+        this.ackDefKeys = ackDefKeys;
     }
 
     // Build register of array positions for variable dataValues that we need to be able to set
@@ -40,7 +42,13 @@ public class PrclSchema {
         return ints;
     }
 
+    public String getAckDefForByteValue(String key, int value) {
+        return ackDefinitions.get(key).get(value);
+    }
 
+    public HashMap<String, HashMap<Integer, String>> getAckDefinitions() {
+        return ackDefinitions;
+    }
 
     public DataPair getRequest() {
         return request;
@@ -52,6 +60,10 @@ public class PrclSchema {
 
     public DataPair getAck() {
         return ack;
+    }
+
+    public String[] getAckDefKeys() {
+        return ackDefKeys;
     }
 
     public int[] getAckVarPos() {
