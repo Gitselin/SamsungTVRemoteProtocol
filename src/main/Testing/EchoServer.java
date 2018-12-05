@@ -19,18 +19,14 @@ public class EchoServer {
     public static void main(String[] args) {
         try {
             server = new ServerSocket(PORT);
-            client = server.accept();
-
-            netIn = new DataInputStream(client.getInputStream());
-            netOut = new DataOutputStream(client.getOutputStream());
-            running = true;
+            connect();
 
             while (running) {
                 if (client.isConnected()) {
                     receiveData();
                     Thread.sleep(10);
                 } else {
-                    client = server.accept();
+                    connect();
                 }
             }
             close();
@@ -62,6 +58,15 @@ public class EchoServer {
 
         sendData(buffer, bytesRead);
 
+    }
+
+    public static void connect()
+        throws IOException {
+        client = server.accept();
+
+        netIn = new DataInputStream(client.getInputStream());
+        netOut = new DataOutputStream(client.getOutputStream());
+        running = true;
     }
 
     public static void close()
