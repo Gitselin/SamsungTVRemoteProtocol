@@ -109,6 +109,15 @@ public class PrclAdapter implements iPrclAdapter {
         return ackData;
     }
 
+    private String[][] processResponseToHexStrings(int[] response, PrclSchema action) {
+        // 2D String array package for data structure and converted response data
+        String[][] ackData = new String[2][action.getAck().getDataValues().length]; // hard 2 slots for structure and data
+        ackData[0] = action.getAck().getDataStructure();
+        ackData[1] = intArrayToHexStringArray(response);
+
+        return ackData;
+    }
+
 
     private int calcChecksum(int[] data) {
         int checksum = 0;//commandType + id + dataLength + dataValue;
