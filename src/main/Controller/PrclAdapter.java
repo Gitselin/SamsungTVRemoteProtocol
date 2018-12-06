@@ -50,9 +50,11 @@ public class PrclAdapter implements iPrclAdapter {
         // Case Switch by requestKey (valid keys defined in config.json)
         // The switch should contain an entry for all implemented protocol function
         String[][] result;
+        System.out.println("ParseResponse switch on: " + requestKey);
 
         switch (requestKey) {
             case "Get Status": {
+                System.out.println("    case: Get Status");
                 PrclSchema action = prclLibrary.get("Get Status");
                 result = processResponse(response, action);
                 break;

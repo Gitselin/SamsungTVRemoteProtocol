@@ -77,16 +77,15 @@ public abstract class PrclInitializer {
         return values;
     }
 
-    private static HashMap<String, HashMap<Integer, String>> parseDefinitionsField(JSONObject data) {
-        data = (JSONObject) data.get("Definitions");
-        String[] keys = jsonArrayToStringArray((JSONArray) data.get("Keys"));
+    private static HashMap<String, HashMap<Integer, String>> parseDefinitionsField(JSONObject definitionsData, String[] ackDefKeys) {
         HashMap<String, HashMap<Integer, String>> result = new HashMap<>();
 
-        for (String s : keys) {
-            JSONObject keyDef = (JSONObject) data.get(s);
+        for (String s : ackDefKeys) {
+            JSONObject keyDef = (JSONObject) definitionsData.get(s);
             int[] keyData = jsonArrayHexStringToIntArray((JSONArray) keyDef.get("Data"));
-            String[] keyValue = jsonArrayToStringArray((JSONArray) keyDef.get("Display Value"));
 
+            String[] keyValue = jsonArrayToStringArray((JSONArray) keyDef.get("Display Value"));
+            System.out.println("Building definitions for: " + s); // TODO - make into "debugPrint" when my troubleshooting is done
             result.put(s, makeDefValueMap(keyData, keyValue));
         }
         return result;
@@ -96,10 +95,11 @@ public abstract class PrclInitializer {
         DataPair req = makeDataPair(data, "Request Structure", "Request Values");
         DataPair ack = makeDataPair(data, "Ack Structure", "Ack Values");
         DataPair nak = makeDataPair(data, "Nak Structure", "Nak Values");
-        HashMap<String, HashMap<Integer, String>> definitions = parseDefinitionsField(data);
         data = (JSONObject) data.get("Definitions");
         String[] ackKeyDef = jsonArrayToStringArray((JSONArray) data.get("Keys"));
+        HashMap<String, HashMap<Integer, String>> definitions = parseDefinitionsField(data, ackKeyDef);
 
+        System.out.println("Definition keys: " + Arrays.deepToString(ackKeyDef)); // TODO - make into "debugPrint" when my troubleshooting is done
         return new PrclSchema(req, ack, nak, definitions, ackKeyDef);
     }
 
@@ -118,6 +118,7 @@ public abstract class PrclInitializer {
         HashMap<Integer, String> ackValueMap = new HashMap<>();
 
         for (int i = 0; i < value.length; i++) {
+            System.out.println("adding to map: <" + value[i] + ", " + meaning[i] + ">" ); // TODO - make into "debugPrint" when my troubleshooting is done
             ackValueMap.put(value[i], meaning[i]);
         }
 
