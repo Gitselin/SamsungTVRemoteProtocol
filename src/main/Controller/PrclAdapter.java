@@ -101,9 +101,12 @@ public class PrclAdapter implements iPrclAdapter {
             if (definitions.containsKey(key)) {
                 if (definitions.get(key).size() == 1) { // if there is only one value (null, -1) means it is a range and we just want the int as string without conversion
                     result[i] = Integer.toString(value);
-                } else {
-                    result[i] = definitions.get(key).get(value);
-                    // TODO - Something if value is not found (eks. return hex value & "not found in definitions")
+                } else { // Something if value is not found (eks. return hex value & "not found in definitions")
+                    if (definitions.get(key).containsKey(value)) {
+                        result[i] = definitions.get(key).get(value);
+                    } else {
+                        result[i] = "Error - Value not found in definitions (" + Integer.toHexString(response[i]) + ")";
+                    }
                 }
             } else {
                 result[i] = Integer.toHexString(response[i]); // if key is not in definitions just do straight toHexString
