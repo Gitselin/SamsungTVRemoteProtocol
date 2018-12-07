@@ -99,7 +99,7 @@ public abstract class PrclInitializer {
         String[] ackKeyDef = jsonArrayToStringArray((JSONArray) data.get("Keys"));
         HashMap<String, HashMap<Integer, String>> definitions = parseDefinitionsField(data, ackKeyDef);
 
-        System.out.println("Definition keys: " + Arrays.deepToString(ackKeyDef)); // TODO - make into "debugPrint" when my troubleshooting is done
+        debugPrint("Definition keys: " + Arrays.deepToString(ackKeyDef));
         return new PrclSchema(req, ack, nak, definitions, ackKeyDef);
     }
 
@@ -118,7 +118,7 @@ public abstract class PrclInitializer {
         HashMap<Integer, String> ackValueMap = new HashMap<>();
 
         for (int i = 0; i < value.length; i++) {
-            System.out.println("adding to map: <" + value[i] + ", " + meaning[i] + ">" ); // TODO - make into "debugPrint" when my troubleshooting is done
+            debugPrint("adding to map: <" + value[i] + ", " + meaning[i] + ">" );
             ackValueMap.put(value[i], meaning[i]);
         }
 
