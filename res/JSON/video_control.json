@@ -6,7 +6,7 @@
     "Description": "Personal Computer shows the screen condition of tv / monitor",
     "Status-Get Status function": {
       "Current status": "working",
-      "Wireshark capture file": "[23.11.2018] GetStatus - First success capture"
+      "Wireshark capture file": "[07.12.2018] GetVideoStatus - First success capture"
     }
   },
   "Data": {

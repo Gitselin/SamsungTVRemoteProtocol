@@ -10,9 +10,9 @@ null values represent a field that is variable like ID that is dependent on the 
 Adding new Protocol Function
 -----------------------------------------
 
-Write the json file with the general definitions
+- Write the json file with the general definitions
 
-Update the config file with the filename and key in KEY_LIST and LOAD_LIST -> they need to be in the same position for the two lists
+- Update the config file with the filename and key in KEY_LIST and LOAD_LIST -> they need to be in the same position for the two lists
 
-In PrclAdapter update parseResponse() and parseRequest() switches with a case for the new function
+- In PrclAdapter update parseResponse() and parseRequest() switches with a case for the new function
 
