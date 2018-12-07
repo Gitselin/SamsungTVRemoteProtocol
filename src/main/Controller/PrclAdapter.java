@@ -42,6 +42,18 @@ public class PrclAdapter implements iPrclAdapter {
                 break;
             }
 
+            case "Get Standby Setting": {
+                PrclSchema action = prclLibrary.get("Set Standby Setting");
+                result =  processGetFromSetRequest(action); // Do a get request from set spec
+                break;
+            }
+
+            case "Set Standby Setting": {
+                PrclSchema action = prclLibrary.get("Set Standby Setting");
+                result =  processRequest(variableData, action);
+                break;
+            }
+
             default: {
                 result = null; // Should not happen, included to make it obvious something went wrong if we end here
                 debugPrint("WARNING: parseRequest() switch went to default (in Controller.PrclAdapter)");
@@ -69,6 +81,20 @@ public class PrclAdapter implements iPrclAdapter {
             case "Get Video Status": {
                 System.out.println("    case: Get Video Status");
                 PrclSchema action = prclLibrary.get("Get Video Status");
+                result = processResponse(response, action);
+                break;
+            }
+
+            case "Set Standby Setting": {
+                System.out.println("    case: Set Standby Setting");
+                PrclSchema action = prclLibrary.get("Set Standby Setting");
+                result = processResponse(response, action);
+                break;
+            }
+
+            case "Get Standby Setting": {
+                System.out.println("    case: Get Standby Setting");
+                PrclSchema action = prclLibrary.get("Set Standby Setting");
                 result = processResponse(response, action);
                 break;
             }
