@@ -49,7 +49,35 @@
     },
     "ERR note": "No definitions given for meaning of error values",
     "Definitions": {
-
+      "Keys": ["Contrast", "Brightness", "Sharpness", "Color", "Tint", "ColorTone", "ColorTemp"],
+      "Contrast": {
+        "Data":["-1"],
+        "Display Value": ["null"]
+      },
+      "Brightness": {
+        "Data":["-1"],
+        "Display Value": ["null"]
+      },
+      "Sharpness": {
+        "Data":["-1"],
+        "Display Value": ["null"]
+      },
+      "Color": {
+        "Data":["-1"],
+        "Display Value": ["null"]
+      },
+      "Tint": {
+        "Data":["-1"],
+        "Display Value": ["null"]
+      },
+      "ColorTone": {
+        "Data":["-1"],
+        "Display Value": ["null"]
+      },
+      "ColorTemp": {
+        "Data":["-1"],
+        "Display Value": ["null"]
+      }
     }
   }
 }

@@ -36,6 +36,12 @@ public class PrclAdapter implements iPrclAdapter {
                 break;
             }
 
+            case "Get Video Status": {
+                PrclSchema action = prclLibrary.get("Get Video Status");
+                result =  processRequest(variableData, action);
+                break;
+            }
+
             default: {
                 result = null; // Should not happen, included to make it obvious something went wrong if we end here
                 debugPrint("WARNING: parseRequest() switch went to default (in Controller.PrclAdapter)");
@@ -56,6 +62,13 @@ public class PrclAdapter implements iPrclAdapter {
             case "Get Status": {
                 System.out.println("    case: Get Status");
                 PrclSchema action = prclLibrary.get("Get Status");
+                result = processResponse(response, action);
+                break;
+            }
+
+            case "Get Video Status": {
+                System.out.println("    case: Get Video Status");
+                PrclSchema action = prclLibrary.get("Get Video Status");
                 result = processResponse(response, action);
                 break;
             }

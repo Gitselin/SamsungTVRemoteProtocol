@@ -23,7 +23,7 @@ public class MWTestDriver {
         try {
             Controller ctrl = new Controller();
             String[] keyList = ctrl.getKEY_LIST();
-            String keyToSend = keyList[0];
+            String keyToSend = keyList[1];
             debugPrint("Protocol function key: " + keyToSend);
             String[][] response = ctrl.sendRequest(keyToSend);
 
