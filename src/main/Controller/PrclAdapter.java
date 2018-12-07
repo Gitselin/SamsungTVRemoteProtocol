@@ -1,5 +1,6 @@
 package Controller;
 
+import Protocol.DataPair;
 import Protocol.PrclInitializer;
 import Protocol.PrclSchema;
 import static Controller.Utility.*;
@@ -14,10 +15,10 @@ public class PrclAdapter implements iPrclAdapter {
     private final int SCREEN_ID;
 
 
-    public PrclAdapter(int screenID, String[] loadList, String[] keyList, String jsonPath)
+    public PrclAdapter(int screenID, String[] loadList, String[] getKeyList, String[] setKeyList,String jsonPath)
         throws ParseException, IOException {
         // run PrclInitializer and build Prcl HashMap
-        prclLibrary = PrclInitializer.loadJsonData(loadList, keyList, jsonPath);
+        prclLibrary = PrclInitializer.loadJsonData(loadList, getKeyList, setKeyList,jsonPath);
         SCREEN_ID = screenID;
     }
 
@@ -32,25 +33,25 @@ public class PrclAdapter implements iPrclAdapter {
         switch (requestKey) {
             case "Get Status": {
                 PrclSchema action = prclLibrary.get("Get Status");
-                result =  processRequest(variableData, action);
+                result =  processRequest(variableData, action.getGetRequest());
                 break;
             }
 
             case "Get Video Status": {
                 PrclSchema action = prclLibrary.get("Get Video Status");
-                result =  processRequest(variableData, action);
+                result =  processRequest(variableData, action.getGetRequest());
                 break;
             }
 
             case "Get Standby Setting": {
-                PrclSchema action = prclLibrary.get("Set Standby Setting");
-                result =  processGetFromSetRequest(action); // Do a get request from set spec
+                PrclSchema action = prclLibrary.get("Get Standby Setting");
+                result =  processRequest(variableData, action.getGetRequest());
                 break;
             }
 
             case "Set Standby Setting": {
                 PrclSchema action = prclLibrary.get("Set Standby Setting");
-                result =  processRequest(variableData, action);
+                result =  processRequest(variableData, action.getSetRequest());
                 break;
             }
 
@@ -112,9 +113,9 @@ public class PrclAdapter implements iPrclAdapter {
         return BASE_ACK_LENGTH + prclLibrary.get(requestKey).getAck().getDataLength();
     }
 
-    private int[] processRequest(int[] variableData, PrclSchema action) {
-        int[] result = action.getRequest().getDataValues();
-        int[] varPositions = action.getRequestVarPos();
+    private int[] processRequest(int[] variableData, DataPair request) {
+        int[] result = request.getDataValues();
+        int[] varPositions = request.getVarPos();
 
         // set screen id
         result[varPositions[0]] = SCREEN_ID; // first position of a variable is the screen id
@@ -122,21 +123,6 @@ public class PrclAdapter implements iPrclAdapter {
         for (int i = 1; i < varPositions.length-1; i++) { // skip the first (ID) & the last (checksum)
             result[varPositions[i]] = variableData[i];
         }
-        // calc checksum
-        result[result.length-1] = calcChecksum(result);
-        return result;
-    }
-
-    private int[] processGetFromSetRequest(PrclSchema action) {
-        // make a get request from a set spec (data length to 0 and skip straigth to checksum)
-        // overload to processRequest preferrebly
-        int[] setRequest = action.getRequest().getDataValues();
-        int[] varPositions = action.getRequestVarPos();
-        int dataLength = action.getRequest().getDataLength();
-        int[] result = new int[action.getRequest().getDataValues().length - dataLength];
-
-        result[varPositions[0]] = SCREEN_ID;
-        result[varPositions[0]+1] = 0; // change data length to 0
         // calc checksum
         result[result.length-1] = calcChecksum(result);
         return result;

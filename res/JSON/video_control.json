@@ -10,14 +10,16 @@
     }
   },
   "Data": {
-    "Request Structure": ["header", "command", "id", "data length", "checksum"],
-    "Request Values": {
+    "Get Request Structure": ["header", "command", "id", "data length", "checksum"],
+    "Get Request Values": {
       "header": "0xAA",
       "command": "0x04",
       "id": "null",
       "data length": "0",
       "checksum": "null"
     },
+    "Set Request Structure": ["null"],
+    "Set Request Values": {},
     "Ack Structure": ["header", "command", "id", "data length", "ack/nak", "r-CMD", "Contrast", "Brightness", "Sharpness", "Color", "Tint", "ColorTone", "ColorTemp", "Val 8","checksum"],
     "Ack Values": {
       "header": "0xAA",

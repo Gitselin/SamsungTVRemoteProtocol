@@ -10,8 +10,16 @@
     }
   },
   "Data": {
-    "Request Structure": ["header", "command", "id", "data length", "Standby Setting", "checksum"],
-    "Request Values": {
+    "Get Request Structure": ["header", "command", "id", "data length", "checksum"],
+    "Get Request Values": {
+      "header": "0xAA",
+      "command": "0x4A",
+      "id": "null",
+      "data length": "0",
+      "checksum": "null"
+    },
+    "Set Request Structure": ["header", "command", "id", "data length", "Standby Setting", "checksum"],
+    "Set Request Values": {
       "header": "0xAA",
       "command": "0x4A",
       "id": "null",

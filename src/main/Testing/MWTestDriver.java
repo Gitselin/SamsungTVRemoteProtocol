@@ -22,10 +22,14 @@ public class MWTestDriver {
 
         try {
             Controller ctrl = new Controller();
-            String[] keyList = ctrl.getKEY_LIST();
-            String keyToSend = keyList[1];
+            String[] keyList = ctrl.getGET_KEY_LIST();
+            //String keyToSend = keyList[2];
+            int[] varData = {0xff, 0x01}; // Set Standby Setting - screen id & Standby Setting
+
+            String keyToSend = "Set Standby Setting";
+
             debugPrint("Protocol function key: " + keyToSend);
-            String[][] response = ctrl.sendRequest(keyToSend);
+            String[][] response = ctrl.sendRequest(keyToSend, varData);
 
             //debugPrint("Response: " + Arrays.deepToString(response[1]));
             System.out.println("Response: " + Arrays.deepToString(response[1]));

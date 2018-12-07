@@ -10,14 +10,16 @@
     }
   },
   "Data": {
-    "Request Structure": ["header", "command", "id", "data length", "checksum"],
-    "Request Values": {
+    "Get Request Structure": ["header", "command", "id", "data length", "checksum"],
+    "Get Request Values": {
       "header": "0xAA",
       "command": "0x00",
       "id": "null",
       "data length": "0",
       "checksum": "null"
     },
+    "Set Request Structure": ["null"],
+    "Set Request Values": {},
     "Ack Notes": "X Time NF, are no longer used and always 0x00",
     "Ack Structure": ["header", "command", "id", "data length", "ack/nak", "r-CMD", "Power", "Volume", "Mute", "Input", "Aspect", "N Time NF", "F Time NF", "checksum"],
     "Ack Values": {

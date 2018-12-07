@@ -5,7 +5,8 @@
     "IP": "169.254.214.36",
     "PORT": 1515,
     "Screen ID": "0xFF",
-    "load list": ["status_control.json", "video_control.json", "standby_control"],
-    "key list": ["Get Status", "Get Video Status", "Set Standby Setting"]
+    "load list": ["status_control.json", "video_control.json", "standby_control.json"],
+    "get key list": ["Get Status", "Get Video Status", "Get Standby Setting"],
+    "set key list": ["null", "null", "Set Standby Setting"]
   }
 }

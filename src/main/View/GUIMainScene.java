@@ -34,7 +34,7 @@ public class GUIMainScene extends Application {
         ArrayList<String> statusTexts = new ArrayList<>();
         try {
             Controller ctrl = new Controller();
-            String[] keylist = ctrl.getKEY_LIST();
+            String[] keylist = ctrl.getGET_KEY_LIST();
             String keyToSend = keylist[0];
             String[][] response = ctrl.sendRequest(keyToSend);
             testResponse = Arrays.deepToString(response[1]);

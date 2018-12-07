@@ -16,7 +16,7 @@ public abstract class PrclInitializer {
     // load json protocol data and save to HashMap using "request key"
     // to pair with PrclSchema object
     // NOTE: loadList & keyList should have the same length
-    public static HashMap<String, PrclSchema> loadJsonData(String[] loadList, String[] keyList, String pathNoFileName)
+    public static HashMap<String, PrclSchema> loadJsonData(String[] loadList, String[] getKeyList, String[] setKeyList,String pathNoFileName)
         throws ParseException, IOException {
         HashMap<String, PrclSchema> prclMap = new HashMap<>();
 
@@ -24,7 +24,13 @@ public abstract class PrclInitializer {
             String fullPath = pathNoFileName + loadList[i];
             debugPrint("Reading json file: " + fullPath);
             JSONObject data = loadDataFromJson(fullPath);
-            prclMap.put(keyList[i], makePrclSchema(data));
+            PrclSchema schema = makePrclSchema(data);
+            if (!getKeyList[i].equalsIgnoreCase("null")) { // map get/set keys to same object when not null
+                prclMap.put(getKeyList[i], schema);
+            }
+            if (!setKeyList[i].equalsIgnoreCase("null")) {
+                prclMap.put(setKeyList[i], schema);
+            }
         }
         return prclMap;
     }
@@ -92,7 +98,8 @@ public abstract class PrclInitializer {
     }
 
     private static PrclSchema makePrclSchema(JSONObject data) {
-        DataPair req = makeDataPair(data, "Request Structure", "Request Values");
+        DataPair getReq = makeDataPair(data, "Get Request Structure", "Get Request Values");
+        DataPair setReq = makeDataPair(data,"Set Request Structure", "Set Request Values");
         DataPair ack = makeDataPair(data, "Ack Structure", "Ack Values");
         DataPair nak = makeDataPair(data, "Nak Structure", "Nak Values");
         data = (JSONObject) data.get("Definitions");
@@ -100,7 +107,7 @@ public abstract class PrclInitializer {
         HashMap<String, HashMap<Integer, String>> definitions = parseDefinitionsField(data, ackKeyDef);
 
         debugPrint("Definition keys: " + Arrays.deepToString(ackKeyDef));
-        return new PrclSchema(req, ack, nak, definitions, ackKeyDef);
+        return new PrclSchema(getReq, setReq,ack, nak, definitions, ackKeyDef);
     }
 
     private static DataPair makeDataPair(JSONObject data, String structKey, String valueKey) {
@@ -124,5 +131,7 @@ public abstract class PrclInitializer {
 
         return ackValueMap;
     }
+
+
 
 }

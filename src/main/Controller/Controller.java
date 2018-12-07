@@ -22,7 +22,8 @@ public class Controller {
     private final int SCREEN_ID;
     private final int NET_READ_DELAY_MS = 10;
     private final String[] LOAD_LIST;
-    private final String[] KEY_LIST;
+    private final String[] GET_KEY_LIST;
+    private final String[] SET_KEY_LIST;
 
     private static iPrclAdapter prclHandler;
     private static NetConnector network;
@@ -36,10 +37,12 @@ public class Controller {
             PORT = longToInt((long) config.get("PORT"));
             SCREEN_ID = hexStringToInt((String) config.get("Screen ID"));
             LOAD_LIST = jsonArrayToStringArray((JSONArray) config.get("load list"));
-            KEY_LIST = jsonArrayToStringArray((JSONArray) config.get("key list"));
-            debugPrint("Config loading complete..");
+            GET_KEY_LIST = jsonArrayToStringArray((JSONArray) config.get("get key list"));
+            SET_KEY_LIST = jsonArrayToStringArray((JSONArray) config.get("set key list"));
+
+        debugPrint("Config loading complete..");
             // build prclLibrary from PrclInitializer method call
-            prclHandler = new PrclAdapter(SCREEN_ID, LOAD_LIST, KEY_LIST, JSON_PATH);
+            prclHandler = new PrclAdapter(SCREEN_ID, LOAD_LIST, GET_KEY_LIST, SET_KEY_LIST,JSON_PATH);
             network = new NetConnector(IP, PORT, NET_READ_DELAY_MS);
     }
 
@@ -59,7 +62,7 @@ public class Controller {
     }
 
     public String[] getConfigForDebug() {
-        return new String[] {IP, Integer.toString(PORT), Integer.toString(SCREEN_ID), Arrays.deepToString(LOAD_LIST), Arrays.deepToString(KEY_LIST)};
+        return new String[] {IP, Integer.toString(PORT), Integer.toString(SCREEN_ID), Arrays.deepToString(LOAD_LIST), Arrays.deepToString(GET_KEY_LIST), Arrays.deepToString(SET_KEY_LIST)};
     }
 
     public void closeNetConnection()
@@ -71,9 +74,11 @@ public class Controller {
         return LOAD_LIST;
     }
 
-    public String[] getKEY_LIST() {
-        return KEY_LIST;
+    public String[] getGET_KEY_LIST() {
+        return GET_KEY_LIST;
     }
+
+    public String[] getSET_KEY_LIST() {return SET_KEY_LIST; }
 
 
     /*
