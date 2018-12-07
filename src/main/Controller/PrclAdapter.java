@@ -101,6 +101,21 @@ public class PrclAdapter implements iPrclAdapter {
         return result;
     }
 
+    private int[] processGetFromSetRequest(PrclSchema action) {
+        // make a get request from a set spec (data length to 0 and skip straigth to checksum)
+        // overload to processRequest preferrebly
+        int[] setRequest = action.getRequest().getDataValues();
+        int[] varPositions = action.getRequestVarPos();
+        int dataLength = action.getRequest().getDataLength();
+        int[] result = new int[action.getRequest().getDataValues().length - dataLength];
+
+        result[varPositions[0]] = SCREEN_ID;
+        result[varPositions[0]+1] = 0; // change data length to 0
+        // calc checksum
+        result[result.length-1] = calcChecksum(result);
+        return result;
+    }
+
     private String[][] processResponse(int[] response, PrclSchema action) {
         // 2D String array package for data structure and converted response data
         String[][] ackData = new String[2][action.getAck().getDataValues().length]; // hard 2 slots for structure and data

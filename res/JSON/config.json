@@ -1,12 +1,11 @@
 {
   "Version": "Draft-Version-0.5",
-  "Description": "For connecting to the screen",
+  "Description": "For connecting to the screen and loading of protocol data",
   "Protocol Settings": {
     "IP": "169.254.214.36",
     "PORT": 1515,
     "Screen ID": "0xFF",
-    "load list": ["status_control.json",
-    "video_control.json"],
-    "key list": ["Get Status", "Get Video Status"]
+    "load list": ["status_control.json", "video_control.json", "standby_control"],
+    "key list": ["Get Status", "Get Video Status", "Set Standby Setting"]
   }
 }

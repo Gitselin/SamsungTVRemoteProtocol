@@ -1,0 +1,79 @@
+{
+  "Meta data": {
+    "Version": "StructureDraft-v0.5",
+    "Category": "Status Control",
+    "Request name": "Get Status",
+    "Description": "Personal Computer shows current settings for the tv",
+    "Status-Get Status function": {
+      "Current status": "working",
+      "Wireshark capture file": "[23.11.2018] GetStatus - First success capture"
+    }
+  },
+  "Data": {
+    "Request Structure": ["header", "command", "id", "data length", "checksum"],
+    "Request Values": {
+      "header": "0xAA",
+      "command": "0x00",
+      "id": "null",
+      "data length": "0",
+      "checksum": "null"
+    },
+    "Ack Notes": "X Time NF, are no longer used and always 0x00",
+    "Ack Structure": ["header", "command", "id", "data length", "ack/nak", "r-CMD", "Power", "Volume", "Mute", "Input", "Aspect", "N Time NF", "F Time NF", "checksum"],
+    "Ack Values": {
+      "header": "0xAA",
+      "command": "0xFF",
+      "id": "null",
+      "data length": "9",
+      "ack/nak": "A",
+      "r-CMD": "0x00",
+      "Power": "null",
+      "Volume": "null",
+      "Mute": "null",
+      "Input": "null",
+      "Aspect": "null",
+      "N Time NF": "0x00",
+      "F Time NF": "0x00",
+      "checksum": "null"
+    },
+    "Nak Structure": ["header", "command", "id", "data length", "ack/nak", "r-CMD", "ERR", "checksum"],
+    "Nak Values": {
+      "header": "0xAA",
+      "command": "0xFF",
+      "id": "null",
+      "data length": "3",
+      "ack/nak": "N",
+      "r-CMD": "0x00",
+      "ERR": "null",
+      "checksum": "null"
+    },
+    "ERR note": {
+      "0": "Checksum error",
+      "1": "other (just defined as: etc.)"
+    },
+    "Definitions": {
+      "Description": "Data value of -1 signifying no conversion needed",
+      "Keys": ["Power", "Volume", "Mute", "Input", "Aspect"],
+      "Power": {
+        "Data":["0x00", "0x01"],
+        "Display Value": ["off", "On"]
+      },
+      "Volume": {
+        "Data": ["-1"],
+        "Display Value": ["null"]
+      },
+      "Mute": {
+        "Data":["0x00", "0x01"],
+        "Display Value": ["off", "On"]
+      },
+      "Input": {
+        "Data": ["0x14", "0x1E", "0x18", "0x0C", "0x04", "0x08", "0x20", "0x1F", "0x40", "0x21", "0x22", "0x23", "0x24", "0x25", "0x60"],
+        "Display Value": ["PC", "BNC", "DVI", "AV", "S-Video", "Component", "Magicinfo", "DVI_VIDEO", "TV (DTV)", "HDMI1", "HDMI1_PC", "HDMI2", "HDMI2_PC", "DisplayPort", "Magicinfo Lite"]
+      },
+      "Aspect": {
+        "Data": ["0x10", "0x18", "0x00", "0x01", "0x04", "0x5", "0x06", "0x09", "0x31", "0x0B", "0x0C", "0x0D", "0x0E", "0x0F"],
+        "Display Value": ["16:9", "4:3", "Auto Wide", "16:9", "Zoom", "Zoom1", "Zoom2", "Just Scan (Screen Fit)", "Wide Zoom", "4:3", "Wide Fit", "Custom", "Smart View 1", "Smart View 2"]
+      }
+    }
+  }
+}
