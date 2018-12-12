@@ -1,5 +1,6 @@
 package Controller;
 
+import Protocol.DataPair;
 import Protocol.PrclInitializer;
 import Protocol.PrclSchema;
 import static Controller.Utility.*;
@@ -14,10 +15,10 @@ public class PrclAdapter implements iPrclAdapter {
     private final int SCREEN_ID;
 
 
-    public PrclAdapter(int screenID, String[] loadList, String[] keyList, String jsonPath)
+    public PrclAdapter(int screenID, String[] loadList, String[] getKeyList, String[] setKeyList,String jsonPath)
         throws ParseException, IOException {
         // run PrclInitializer and build Prcl HashMap
-        prclLibrary = PrclInitializer.loadJsonData(loadList, keyList, jsonPath);
+        prclLibrary = PrclInitializer.loadJsonData(loadList, getKeyList, setKeyList,jsonPath);
         SCREEN_ID = screenID;
     }
 
@@ -32,7 +33,25 @@ public class PrclAdapter implements iPrclAdapter {
         switch (requestKey) {
             case "Get Status": {
                 PrclSchema action = prclLibrary.get("Get Status");
-                result =  processRequest(variableData, action);
+                result =  processRequest(variableData, action.getGetRequest());
+                break;
+            }
+
+            case "Get Video Status": {
+                PrclSchema action = prclLibrary.get("Get Video Status");
+                result =  processRequest(variableData, action.getGetRequest());
+                break;
+            }
+
+            case "Get Standby Setting": {
+                PrclSchema action = prclLibrary.get("Get Standby Setting");
+                result =  processRequest(variableData, action.getGetRequest());
+                break;
+            }
+
+            case "Set Standby Setting": {
+                PrclSchema action = prclLibrary.get("Set Standby Setting");
+                result =  processRequest(variableData, action.getSetRequest());
                 break;
             }
 
@@ -60,6 +79,27 @@ public class PrclAdapter implements iPrclAdapter {
                 break;
             }
 
+            case "Get Video Status": {
+                System.out.println("    case: Get Video Status");
+                PrclSchema action = prclLibrary.get("Get Video Status");
+                result = processResponse(response, action);
+                break;
+            }
+
+            case "Set Standby Setting": {
+                System.out.println("    case: Set Standby Setting");
+                PrclSchema action = prclLibrary.get("Set Standby Setting");
+                result = processResponse(response, action);
+                break;
+            }
+
+            case "Get Standby Setting": {
+                System.out.println("    case: Get Standby Setting");
+                PrclSchema action = prclLibrary.get("Set Standby Setting");
+                result = processResponse(response, action);
+                break;
+            }
+
             default: {
                 result = null; // Should not happen, included to make it obvious something went wrong if we end here
                 debugPrint("WARNING: parseResponse() switch went to default (in Controller.PrclAdapter)");
@@ -73,9 +113,9 @@ public class PrclAdapter implements iPrclAdapter {
         return BASE_ACK_LENGTH + prclLibrary.get(requestKey).getAck().getDataLength();
     }
 
-    private int[] processRequest(int[] variableData, PrclSchema action) {
-        int[] result = action.getRequest().getDataValues();
-        int[] varPositions = action.getRequestVarPos();
+    private int[] processRequest(int[] variableData, DataPair request) {
+        int[] result = request.getDataValues();
+        int[] varPositions = request.getVarPos();
 
         // set screen id
         result[varPositions[0]] = SCREEN_ID; // first position of a variable is the screen id

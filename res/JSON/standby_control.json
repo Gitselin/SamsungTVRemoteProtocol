@@ -1,0 +1,62 @@
+{
+  "Meta data": {
+    "Version": "StructureDraft-v0.5",
+    "Category": "Standby Control",
+    "Request name": "Set Standby Setting",
+    "Description": "Personal Computer adjust standby setting of tv / monitor",
+    "Status-Get Status function": {
+      "Current status": "working",
+      "Wireshark capture file": "[23.11.2018] GetStatus - First success capture"
+    }
+  },
+  "Data": {
+    "Get Request Structure": ["header", "command", "id", "data length", "checksum"],
+    "Get Request Values": {
+      "header": "0xAA",
+      "command": "0x4A",
+      "id": "null",
+      "data length": "0",
+      "checksum": "null"
+    },
+    "Set Request Structure": ["header", "command", "id", "data length", "Standby Setting", "checksum"],
+    "Set Request Values": {
+      "header": "0xAA",
+      "command": "0x4A",
+      "id": "null",
+      "data length": "1",
+      "Standby Setting": "null",
+      "checksum": "null"
+    },
+    "Ack Structure": ["header", "command", "id", "data length", "ack/nak", "r-CMD", "Standby Setting", "checksum"],
+    "Ack Values": {
+      "header": "0xAA",
+      "command": "0xFF",
+      "id": "null",
+      "data length": "3",
+      "ack/nak": "A",
+      "r-CMD": "0x4A",
+      "Standby Setting": "0x00",
+      "checksum": "null"
+    },
+    "Nak Structure": ["header", "command", "id", "data length", "ack/nak", "r-CMD", "ERR", "checksum"],
+    "Nak Values": {
+      "header": "0xAA",
+      "command": "0xFF",
+      "id": "null",
+      "data length": "3",
+      "ack/nak": "N",
+      "r-CMD": "0x4A",
+      "ERR": "null",
+      "checksum": "null"
+    },
+    "Nak ERR note": "No error code definitions listed",
+    "Definitions": {
+      "Description": "Data value of -1 signifying no conversion needed",
+      "Keys": ["Standby Setting"],
+      "Standby Setting": {
+        "Data":["0x00", "0x01", "0x02"],
+        "Display Value": ["off", "On", "Auto"]
+      }
+    }
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "Meta data": {
+    "Version": "StructureDraft-v0.5",
+    "Category": "Video Control",
+    "Request name": "Get Video Status",
+    "Description": "Personal Computer shows the screen condition of tv / monitor",
+    "Status-Get Status function": {
+      "Current status": "working",
+      "Wireshark capture file": "[07.12.2018] GetVideoStatus - First success capture"
+    }
+  },
+  "Data": {
+    "Get Request Structure": ["header", "command", "id", "data length", "checksum"],
+    "Get Request Values": {
+      "header": "0xAA",
+      "command": "0x04",
+      "id": "null",
+      "data length": "0",
+      "checksum": "null"
+    },
+    "Set Request Structure": ["null"],
+    "Set Request Values": {},
+    "Ack Structure": ["header", "command", "id", "data length", "ack/nak", "r-CMD", "Contrast", "Brightness", "Sharpness", "Color", "Tint", "ColorTone", "ColorTemp", "Val 8","checksum"],
+    "Ack Values": {
+      "header": "0xAA",
+      "command": "0xFF",
+      "id": "null",
+      "data length": "0x0A",
+      "ack/nak": "A",
+      "r-CMD": "0x00",
+      "Contrast": "null",
+      "Brightness": "null",
+      "Sharpness": "null",
+      "Color": "null",
+      "Tint": "null",
+      "ColorTone": "null",
+      "ColorTemp": "null",
+      "Val 8": "0x00",
+      "checksum": "null"
+    },
+    "Nak Structure": ["header", "command", "id", "data length", "ack/nak", "r-CMD", "ERR", "checksum"],
+    "Nak Values": {
+      "header": "0xAA",
+      "command": "0xFF",
+      "id": "null",
+      "data length": "3",
+      "ack/nak": "N",
+      "r-CMD": "0x04",
+      "ERR": "null",
+      "checksum": "null"
+    },
+    "ERR note": "No definitions given for meaning of error values",
+    "Definitions": {
+      "Keys": ["Contrast", "Brightness", "Sharpness", "Color", "Tint", "ColorTone", "ColorTemp"],
+      "Contrast": {
+        "Data":["-1"],
+        "Display Value": ["null"]
+      },
+      "Brightness": {
+        "Data":["-1"],
+        "Display Value": ["null"]
+      },
+      "Sharpness": {
+        "Data":["-1"],
+        "Display Value": ["null"]
+      },
+      "Color": {
+        "Data":["-1"],
+        "Display Value": ["null"]
+      },
+      "Tint": {
+        "Data":["-1"],
+        "Display Value": ["null"]
+      },
+      "ColorTone": {
+        "Data":["-1"],
+        "Display Value": ["null"]
+      },
+      "ColorTemp": {
+        "Data":["-1"],
+        "Display Value": ["null"]
+      }
+    }
+  }
+}
