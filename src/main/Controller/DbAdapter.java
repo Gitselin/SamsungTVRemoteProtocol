@@ -67,5 +67,10 @@ class DbAdapter {
         }
     }
 
+    public void createTable(String tableName){
+        //[ID][Name][DateTime]  [Status][Uptime]
+
+    }
+
 
 }

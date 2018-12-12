@@ -8,6 +8,16 @@
     -fx-text-fill: #000000;
 }
 
+.text-area{
+    -fx-font-family: Arial;
+    -fx-background-color: #eaeaea;
+    -fx-text-fill: #171717;
+}
+
+.text-area .content{
+    -fx-background-color: #eaeaea;
+}
+
 .button
 {
     -fx-background-color: rgba(221, 221, 221, 0.98);
