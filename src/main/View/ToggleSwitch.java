@@ -7,7 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 
 
-public class ToggleSwitch extends HBox { //Gotten from https://gist.github.com/TheItachiUchiha/12e40a6f3af6e1eb6f75
+public class ToggleSwitch extends HBox { //Component Gotten from https://gist.github.com/TheItachiUchiha/12e40a6f3af6e1eb6f75
 
     private final Button button = new Button();
     private final Button button2 = new Button();
