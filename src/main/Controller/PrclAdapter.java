@@ -157,6 +157,8 @@ public class PrclAdapter implements iPrclAdapter {
         return ackData;
     }
 
+    // fall back method if we want to revert to just processing response to hex string
+    // and not convert the values based on definitions
     private String[][] processResponseToHexStrings(int[] response, PrclSchema action) {
         // 2D String array package for data structure and converted response data
         String[][] ackData = new String[2][action.getAck().getDataValues().length]; // hard 2 slots for structure and data
