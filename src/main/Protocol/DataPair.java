@@ -77,21 +77,4 @@ public class DataPair {
         return Arrays.deepToString(DATASTRUCTURE) + '\n' + toStringIntArray(DATAVALUES) + '\n';
     }
 
-
-
-    /* OLD MATHODS _ MAYBE USEFULL LATER
-    public String getDataType(int position) {
-        return DATASTRUCTURE[position];
-    }
-
-    public int getDataValue(int position) {
-        return DATAVALUES[position];
-    }
-
-    public void setDataValueByIndex(int index, int newValue) {
-        DATAVALUES[index] = newValue;
-    }
-
-
-     */
 }
