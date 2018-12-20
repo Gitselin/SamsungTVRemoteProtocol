@@ -46,7 +46,7 @@ public class GUIMainScene extends Application {
             statusTexts.add(e.toString());
             e.printStackTrace();
         }
-        catch (ParseException | InterruptedException | IOException e){
+        catch (ParseException | IOException e){
             statusTexts.add(e.toString());
             e.printStackTrace();
         }
