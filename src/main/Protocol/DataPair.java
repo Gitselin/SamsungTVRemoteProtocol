@@ -19,7 +19,7 @@ public class DataPair {
     private final int DATALENGTH;
 
     public DataPair(String[] dataStructure, int[] dataValues) {
-        // TODO - Throw error if not same length (custom exception)
+        // Maybe - Throw error if not same length (custom exception)
         this.DATASTRUCTURE = dataStructure;
         this.DATAVALUES = dataValues;
         VAR_POS = buildVarPositions(DATAVALUES);
