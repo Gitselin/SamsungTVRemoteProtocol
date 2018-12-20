@@ -46,7 +46,7 @@ public class Controller {
     }
 
     public String[][] sendRequest(String requestKey, int[] varData)
-        throws IOException, InterruptedException {
+        throws IOException {
         int[] fullData = prclHandler.parseRequest(requestKey, varData);
         byte[] response = network.sendData(fullData, prclHandler.getFullAckLength(requestKey));
 
@@ -55,7 +55,7 @@ public class Controller {
 
     // Overload of sendRequest() for situations without any variable data
     public String[][] sendRequest(String key)
-        throws InterruptedException, IOException {
+        throws IOException {
         int[] varData = {SCREEN_ID};
         return sendRequest(key,varData);
     }
