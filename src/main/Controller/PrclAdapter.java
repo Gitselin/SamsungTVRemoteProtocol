@@ -55,6 +55,66 @@ public class PrclAdapter implements iPrclAdapter {
                 break;
             }
 
+            case "Get Color": {
+                PrclSchema action = prclLibrary.get("Get Color");
+                result =  processRequest(variableData, action.getSetRequest());
+                break;
+            }
+
+            case "Set Color": {
+                PrclSchema action = prclLibrary.get("Set Color");
+                result =  processRequest(variableData, action.getSetRequest());
+                break;
+            }
+
+            case "Get Tint": {
+                PrclSchema action = prclLibrary.get("Get Tint");
+                result =  processRequest(variableData, action.getSetRequest());
+                break;
+            }
+
+            case "Set Tint": {
+                PrclSchema action = prclLibrary.get("Set Tint");
+                result =  processRequest(variableData, action.getSetRequest());
+                break;
+            }
+
+            case "Get Contrast": {
+                PrclSchema action = prclLibrary.get("Get Contrast");
+                result =  processRequest(variableData, action.getSetRequest());
+                break;
+            }
+
+            case "Set Contrast": {
+                PrclSchema action = prclLibrary.get("Set Contrast");
+                result =  processRequest(variableData, action.getSetRequest());
+                break;
+            }
+
+            case "Get Brightness": {
+                PrclSchema action = prclLibrary.get("Get Brightness");
+                result =  processRequest(variableData, action.getSetRequest());
+                break;
+            }
+
+            case "Set Brightness": {
+                PrclSchema action = prclLibrary.get("Set Brightness");
+                result =  processRequest(variableData, action.getSetRequest());
+                break;
+            }
+
+            case "Get Sharpness": {
+                PrclSchema action = prclLibrary.get("Get Sharpness");
+                result =  processRequest(variableData, action.getSetRequest());
+                break;
+            }
+
+            case "Set Sharpness": {
+                PrclSchema action = prclLibrary.get("Set Sharpness");
+                result =  processRequest(variableData, action.getSetRequest());
+                break;
+            }
+
             default: {
                 result = null; // Should not happen, included to make it obvious something went wrong if we end here
                 debugPrint("WARNING: parseRequest() switch went to default (in Controller.PrclAdapter)");
@@ -96,6 +156,76 @@ public class PrclAdapter implements iPrclAdapter {
             case "Get Standby Setting": {
                 System.out.println("    case: Get Standby Setting");
                 PrclSchema action = prclLibrary.get("Set Standby Setting");
+                result = processResponse(response, action);
+                break;
+            }
+
+            case "Get Color": {
+                System.out.println("    case: Get Color");
+                PrclSchema action = prclLibrary.get("Get Color");
+                result = processResponse(response, action);
+                break;
+            }
+
+            case "Set Color": {
+                System.out.println("    case: Set Color");
+                PrclSchema action = prclLibrary.get("Set Color");
+                result = processResponse(response, action);
+                break;
+            }
+
+            case "Get Tint": {
+                System.out.println("    case: Get Tint");
+                PrclSchema action = prclLibrary.get("Get Tint");
+                result = processResponse(response, action);
+                break;
+            }
+
+            case "Set Tint": {
+                System.out.println("    case: Set Tint");
+                PrclSchema action = prclLibrary.get("Set Tint");
+                result = processResponse(response, action);
+                break;
+            }
+
+            case "Get Contrast": {
+                System.out.println("    case: Get Contrast");
+                PrclSchema action = prclLibrary.get("Get Contrast");
+                result = processResponse(response, action);
+                break;
+            }
+
+            case "Set Contrast": {
+                System.out.println("    case: Set Contrast");
+                PrclSchema action = prclLibrary.get("Set Contrast");
+                result = processResponse(response, action);
+                break;
+            }
+
+            case "Get Brightness": {
+                System.out.println("    case: Get Brightness");
+                PrclSchema action = prclLibrary.get("Get Brightness");
+                result = processResponse(response, action);
+                break;
+            }
+
+            case "Set Brightness": {
+                System.out.println("    case: Set Brightness");
+                PrclSchema action = prclLibrary.get("Set Brightness");
+                result = processResponse(response, action);
+                break;
+            }
+
+            case "Get Sharpness": {
+                System.out.println("    case: Get Sharpness");
+                PrclSchema action = prclLibrary.get("Get Sharpness");
+                result = processResponse(response, action);
+                break;
+            }
+
+            case "Set Sharpness": {
+                System.out.println("    case: Set Sharpness");
+                PrclSchema action = prclLibrary.get("Set Sharpness");
                 result = processResponse(response, action);
                 break;
             }

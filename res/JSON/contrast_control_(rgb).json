@@ -1,0 +1,60 @@
+{
+  "Meta data": {
+    "Version": "StructureDraft-v0.5",
+    "Category": "Contrast Control",
+    "Request name": "Set Contrast",
+    "Description": "Personal Computer adjust contrast setting of tv / monitor when Input Source is PC",
+    "Status-Get Status function": {
+
+    }
+  },
+  "Data": {
+    "Get Request Structure": ["header", "command", "id", "data length", "checksum"],
+    "Get Request Values": {
+      "header": "0xAA",
+      "command": "0x37",
+      "id": "null",
+      "data length": "0",
+      "checksum": "null"
+    },
+    "Set Request Structure": ["header", "command", "id", "data length", "Contrast", "checksum"],
+    "Set Request Values": {
+      "header": "0xAA",
+      "command": "0x37",
+      "id": "null",
+      "data length": "1",
+      "Contrast": "null",
+      "checksum": "null"
+    },
+    "Ack Structure": ["header", "command", "id", "data length", "ack/nak", "r-CMD", "Contrast", "checksum"],
+    "Ack Values": {
+      "header": "0xAA",
+      "command": "0xFF",
+      "id": "null",
+      "data length": "3",
+      "ack/nak": "A",
+      "r-CMD": "0x37",
+      "Contrast": "null",
+      "checksum": "null"
+    },
+    "Nak Structure": ["header", "command", "id", "data length", "ack/nak", "r-CMD", "ERR", "checksum"],
+    "Nak Values": {
+      "header": "0xAA",
+      "command": "0xFF",
+      "id": "null",
+      "data length": "3",
+      "ack/nak": "N",
+      "r-CMD": "0x37",
+      "ERR": "null",
+      "checksum": "null"
+    },
+    "Definitions": {
+      "Description": "Data value of -1 signifying no conversion needed",
+      "Keys": ["Contrast Setting"],
+      "Contrast Setting": {
+        "Data":["-1"],
+        "Display Value": ["null"]
+      }
+    }
+  }
+}

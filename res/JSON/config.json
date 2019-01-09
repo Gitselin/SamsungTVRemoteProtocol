@@ -5,8 +5,8 @@
     "IP": "169.254.214.36",
     "PORT": 1515,
     "Screen ID": "0xFF",
-    "load list": ["status_control.json", "video_control.json", "standby_control.json"],
-    "get key list": ["Get Status", "Get Video Status", "Get Standby Setting"],
-    "set key list": ["null", "null", "Set Standby Setting"]
+    "load list": ["status_control.json", "video_control.json", "standby_control.json", "color_control.json", "tint_control.json", "contrast_control_(rgb).json", "brightness_control_(rgb).json", "sharpness_control.json"],
+    "get key list": ["Get Status", "Get Video Status", "Get Standby Setting", "Get Color", "Get Tint", "Get Contrast", "Get Brightness", "Get Sharpness"],
+    "set key list": ["null", "null", "Set Standby Setting", "Set Color", "Set Tint", "Set Contrast", "Set Brightness", "Set Sharpness"]
   }
 }
