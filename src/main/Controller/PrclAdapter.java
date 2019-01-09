@@ -115,6 +115,18 @@ public class PrclAdapter implements iPrclAdapter {
                 break;
             }
 
+            case "Get Panel State": {
+                PrclSchema action = prclLibrary.get("Get Panel State");
+                result =  processRequest(variableData, action.getSetRequest());
+                break;
+            }
+
+            case "Set Panel State": {
+                PrclSchema action = prclLibrary.get("Set Panel State");
+                result =  processRequest(variableData, action.getSetRequest());
+                break;
+            }
+
             default: {
                 result = null; // Should not happen, included to make it obvious something went wrong if we end here
                 debugPrint("WARNING: parseRequest() switch went to default (in Controller.PrclAdapter)");
@@ -226,6 +238,20 @@ public class PrclAdapter implements iPrclAdapter {
             case "Set Sharpness": {
                 System.out.println("    case: Set Sharpness");
                 PrclSchema action = prclLibrary.get("Set Sharpness");
+                result = processResponse(response, action);
+                break;
+            }
+
+            case "Get Panel State": {
+                System.out.println("    case: Get Panel State");
+                PrclSchema action = prclLibrary.get("Get Panel State");
+                result = processResponse(response, action);
+                break;
+            }
+
+            case "Set Panel State": {
+                System.out.println("    case: Set Panel State");
+                PrclSchema action = prclLibrary.get("Set Panel State");
                 result = processResponse(response, action);
                 break;
             }
