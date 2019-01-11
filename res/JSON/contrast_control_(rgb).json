@@ -14,7 +14,7 @@
       "header": "0xAA",
       "command": "0x37",
       "id": "null",
-      "data length": "0",
+      "data length": "0x00",
       "checksum": "null"
     },
     "Set Request Structure": ["header", "command", "id", "data length", "Contrast", "checksum"],

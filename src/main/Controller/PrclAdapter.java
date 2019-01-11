@@ -57,7 +57,7 @@ public class PrclAdapter implements iPrclAdapter {
 
             case "Get Color": {
                 PrclSchema action = prclLibrary.get("Get Color");
-                result =  processRequest(variableData, action.getSetRequest());
+                result =  processRequest(variableData, action.getGetRequest());
                 break;
             }
 
@@ -69,7 +69,7 @@ public class PrclAdapter implements iPrclAdapter {
 
             case "Get Tint": {
                 PrclSchema action = prclLibrary.get("Get Tint");
-                result =  processRequest(variableData, action.getSetRequest());
+                result =  processRequest(variableData, action.getGetRequest());
                 break;
             }
 
@@ -81,7 +81,7 @@ public class PrclAdapter implements iPrclAdapter {
 
             case "Get Contrast": {
                 PrclSchema action = prclLibrary.get("Get Contrast");
-                result =  processRequest(variableData, action.getSetRequest());
+                result =  processRequest(variableData, action.getGetRequest());
                 break;
             }
 
@@ -93,7 +93,7 @@ public class PrclAdapter implements iPrclAdapter {
 
             case "Get Brightness": {
                 PrclSchema action = prclLibrary.get("Get Brightness");
-                result =  processRequest(variableData, action.getSetRequest());
+                result =  processRequest(variableData, action.getGetRequest());
                 break;
             }
 
@@ -105,7 +105,7 @@ public class PrclAdapter implements iPrclAdapter {
 
             case "Get Sharpness": {
                 PrclSchema action = prclLibrary.get("Get Sharpness");
-                result =  processRequest(variableData, action.getSetRequest());
+                result =  processRequest(variableData, action.getGetRequest());
                 break;
             }
 
@@ -117,7 +117,7 @@ public class PrclAdapter implements iPrclAdapter {
 
             case "Get Panel State": {
                 PrclSchema action = prclLibrary.get("Get Panel State");
-                result =  processRequest(variableData, action.getSetRequest());
+                result =  processRequest(variableData, action.getGetRequest());
                 break;
             }
 
@@ -276,6 +276,7 @@ public class PrclAdapter implements iPrclAdapter {
         // set screen id
         result[varPositions[0]] = SCREEN_ID; // first position of a variable is the screen id
         // set other variables from parameters
+        debugPrint("varPositions lenght: " + varPositions.length + " | varData length: " + variableData.length);
         for (int i = 1; i < varPositions.length-1; i++) { // skip the first (ID) & the last (checksum)
             result[varPositions[i]] = variableData[i];
         }
