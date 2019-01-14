@@ -29,7 +29,7 @@ public class NetConnector {
     public byte[] sendData(int[] fullData, int ackLength)
         throws IOException {
         //debugPrint("Sending: " + Arrays.deepToString(intArrayToHexStringArray(fullData)) + " with expected response length: " + ackLength);
-        System.out.println("Sending: " + Arrays.deepToString(intArrayToHexStringArray(fullData)) + " with expected response length: " + ackLength);
+        debugPrint("Sending: " + Arrays.deepToString(intArrayToHexStringArray(fullData)) + " with expected response length: " + ackLength);
         for (int i : fullData) {
             netOut.writeByte(i);
             //debugPrint("Send data: " + i);

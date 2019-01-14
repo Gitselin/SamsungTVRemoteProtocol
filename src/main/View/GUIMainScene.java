@@ -2,6 +2,7 @@ package View;
 
 import Controller.Controller;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -16,16 +17,13 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import org.json.simple.parser.ParseException;
+import org.sqlite.util.StringUtils;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.Socket;
 import java.net.SocketException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 
 public class GUIMainScene extends Application {
     public static void main(String[] args) {
@@ -34,298 +32,319 @@ public class GUIMainScene extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        ArrayList<String> statusTexts = new ArrayList<>();
-        try {
-            Controller ctrl = new Controller();
-            String[] keylist = ctrl.getGET_KEY_LIST();
-            String keyToSend = keylist[0];
-            String[][] response = ctrl.sendRequest(keyToSend);
+        ArrayList<String> statusInfo = new ArrayList<>();
+        ArrayList<String> statusLabel = new ArrayList<>();
 
-            statusTexts.addAll(Arrays.asList(response[1]).subList(6, Integer.parseInt(response[1][3]) + 4));
-        } catch (SocketException e){
-            statusTexts.add(e.toString());
-            e.printStackTrace();
-        }
-        catch (ParseException | IOException e){
-            statusTexts.add(e.toString());
-            e.printStackTrace();
-        }
+        ArrayList<String> videoInfo = new ArrayList<>();
+        ArrayList<String> videoLabel = new ArrayList<>();
+            try {
+                Controller ctrl = new Controller();
+                String[] keylist = ctrl.getGET_KEY_LIST();
 
+                String requestStatus = keylist[0];
 
+                String[][] responseStatus = ctrl.sendRequest(requestStatus);
+                statusLabel.addAll(Arrays.asList(responseStatus[0]).subList(6, Integer.parseInt(responseStatus[1][3]) + 4));
+                statusInfo.addAll(Arrays.asList(responseStatus[1]).subList(6, Integer.parseInt(responseStatus[1][3]) + 4));
 
-        primaryStage.setTitle("Screen Controller - ME46C");
-
-        ArrayList<BorderPane> maintenancePanels = new ArrayList<>(getPanels()); //Generate Settings
-
-        FlowPane maintenancePane = new FlowPane(Orientation.VERTICAL,64,16); //Setup Settings pane
-        maintenancePane.setAlignment(Pos.CENTER);
-        maintenancePane.getChildren().addAll(maintenancePanels);
-        maintenancePane.setId("sp1");
-
-        ArrayList<BorderPane> picturePanels = new ArrayList<>(getPanels()); //Generate Settings TODO this is a copy, replace this
-
-        FlowPane picturePane = new FlowPane(Orientation.VERTICAL,64,16); //Setup Settings pane
-        picturePane.setAlignment(Pos.CENTER);
-        picturePane.getChildren().addAll(picturePanels);
-        picturePane.setId("sp2");
-
-
-        ArrayList<BorderPane> miscPanels = new ArrayList<>(getPanels()); //Generate Settings TODO this is a copy, replace this
-
-        FlowPane settingsPane2 = new FlowPane(Orientation.VERTICAL,64,16); //Setup Settings pane
-        settingsPane2.setAlignment(Pos.CENTER);
-        settingsPane2.getChildren().addAll(miscPanels);
-        settingsPane2.setId("sp3");
-
-
-        ArrayList<BorderPane> dbPanels = new ArrayList<>(getPanels()); //Generate Settings TODO this is a copy, replace this
-
-        FlowPane dbPane = new FlowPane(Orientation.VERTICAL,64,16); //Setup Settings pane
-        dbPane.setAlignment(Pos.CENTER);
-        dbPane.getChildren().addAll(dbPanels);
-        dbPane.setId("sp4");
-
-        StackPane settingsPanes = new StackPane();
-        settingsPanes.getChildren().addAll(maintenancePane,picturePane,settingsPane2,dbPane);
-        for(Node node: settingsPanes.getChildren()){
-            if (node.getId().equals("sp1")){
-                node.setVisible(true);
-            }else {
-                node.setVisible(false);
+                for (int i = 2; i < keylist.length; i++) {
+                    String[][] responseVideo = ctrl.sendRequest(keylist[i]);
+                    videoLabel.addAll(Collections.singleton(responseVideo[0][6]));
+                    videoInfo.addAll(Collections.singleton(responseVideo[1][6]));
             }
-        }
 
-        TextArea statusArea = new TextArea();
-        statusArea.setEditable(false);
-        statusArea.setPrefSize(128,128);
-        statusArea.setWrapText(true);
-        for(int i = 0; i < statusTexts.size(); i++){
-            statusArea.appendText("Val " + (i+1) + ": " + statusTexts.get(i));
-            if (i+1!=statusTexts.size()){
-                statusArea.appendText("\n");
+
+            } catch (SocketException e){
+                statusInfo.add(e.toString());
+                e.printStackTrace();
             }
-        }
+            catch (ParseException | IOException e){
+                statusInfo.add(e.toString());
+                e.printStackTrace();
+            }
+
+            primaryStage.setTitle("Avian Screen Management - ME46C");
+
+            ArrayList<BorderPane> maintenancePanels = new ArrayList<>(getPanels(videoLabel,videoInfo)); //Generate Settings
+
+            FlowPane maintenancePane = new FlowPane(Orientation.VERTICAL,64,16); //Setup Settings pane
+            maintenancePane.setAlignment(Pos.CENTER);
+            maintenancePane.getChildren().addAll(maintenancePanels);
+            maintenancePane.setId("sp1");
+
+            ArrayList<BorderPane> picturePanels = new ArrayList<>(getPanels(videoLabel,videoInfo)); //Generate Settings TODO this is a copy, replace this
+
+            FlowPane picturePane = new FlowPane(Orientation.VERTICAL,64,16); //Setup Settings pane
+            picturePane.setAlignment(Pos.CENTER);
+            picturePane.getChildren().addAll(picturePanels);
+            picturePane.setId("sp2");
 
 
-        ToggleGroup toggleGroup = new ToggleGroup(); //Setup of toggle buttons
+            ArrayList<BorderPane> miscPanels = new ArrayList<>(getPanels(videoLabel,videoInfo)); //Generate Settings TODO this is a copy, replace this
 
-        ToggleButton maintenanceButton = new ToggleButton("Maintenance");
-        maintenanceButton.setPrefSize(256,64);
-        maintenanceButton.setToggleGroup(toggleGroup);
-        maintenanceButton.setUserData(maintenancePane.getId());
-        maintenanceButton.setSelected(true);
+            FlowPane miscPane = new FlowPane(Orientation.VERTICAL,64,16); //Setup Settings pane
+            miscPane.setAlignment(Pos.CENTER);
+            miscPane.getChildren().addAll(miscPanels);
+            miscPane.setId("sp3");
+            ArrayList<BorderPane> dbPanels = new ArrayList<>(getPanels(videoLabel,videoInfo)); //Generate Settings TODO this is a copy, replace this
 
-        ToggleButton pictureButton = new ToggleButton("Picture");
-        pictureButton.setPrefSize(256,64);
-        pictureButton.setToggleGroup(toggleGroup);
-        pictureButton.setUserData(picturePane.getId());
+            FlowPane dbPane = new FlowPane(Orientation.VERTICAL,64,16); //Setup Settings pane
+            dbPane.setAlignment(Pos.CENTER);
+            dbPane.getChildren().addAll(dbPanels);
+            dbPane.setId("sp4");
 
-        ToggleButton miscButton = new ToggleButton("Miscellaneous");
-        miscButton.setPrefSize(256,64);
-        miscButton.setToggleGroup(toggleGroup);
-        miscButton.setUserData(settingsPane2.getId());
-
-        ToggleButton dbButton = new ToggleButton("Database");
-        dbButton.setPrefSize(256,64);
-        dbButton.setToggleGroup(toggleGroup);
-        dbButton.setUserData(dbPane.getId());
-
-        toggleGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() { //Toggle listner
-            @Override
-            public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
-                if(newValue == null){
-                    for(Node node: settingsPanes.getChildren()){
-                        node.setVisible(false);
-                    }
-                } else {
-                    String valueOfToggle = (String)toggleGroup.getSelectedToggle().getUserData();
-                    for (Node node: settingsPanes.getChildren()) {
-                        if(node.getId().equals(valueOfToggle)){
-                            node.setVisible(true);
-                        } else {
-                            node.setVisible(false);
-                        }
-                    }
-
+            StackPane settingsPanes = new StackPane();
+            settingsPanes.getChildren().addAll(maintenancePane,picturePane,miscPane,dbPane);
+            for(Node node: settingsPanes.getChildren()){
+                if (node.getId().equals("sp1")){
+                    node.setVisible(true);
+                }else {
+                    node.setVisible(false);
                 }
             }
-        });
 
-        //------- FINAL SCENE SETUP ------- (No new nodes below this line)
+            TextArea statusArea = new TextArea();
+            statusArea.setEditable(false);
+            statusArea.setPrefSize(128,128);
+            statusArea.setWrapText(true);
+            for(int i = 0; i < statusInfo.size(); i++){
+                statusArea.appendText(statusLabel.get(i) + ": " + statusInfo.get(i));
+                if (i+1!=statusInfo.size()){
+                    statusArea.appendText("\n");
+                }
+            }
 
-        HBox buttonBox = new HBox(); //Setup of button components
-        buttonBox.setAlignment(Pos.CENTER);
-        buttonBox.getChildren().addAll(maintenanceButton,pictureButton,miscButton,dbButton);
-        buttonBox.setSpacing(16);
 
-        BorderPane topPane = new BorderPane(); //Top pane for Info labels and buttons
-        //topPane.setLeft(topBox);
-        topPane.setBottom(buttonBox);
-        topPane.setTop(statusArea);
-        topPane.setStyle("-fx-background-color: #eaeaea"); //TODO Access by ID instead
+            ToggleGroup toggleGroup = new ToggleGroup(); //Setup of toggle buttons
 
-        BorderPane root = new BorderPane(); //Setting up Root pane
-        root.setTop(topPane);
-        root.setCenter(settingsPanes);
+            ToggleButton maintenanceButton = new ToggleButton("Maintenance");
+            maintenanceButton.setPrefSize(256,64);
+            maintenanceButton.setToggleGroup(toggleGroup);
+            maintenanceButton.setUserData(maintenancePane.getId());
+            maintenanceButton.setSelected(true);
 
-        Scene scene = new Scene(root, 1980, 1080); //Creating Scene
-        File css = new File("res/css/minimal.css"); //Adding CSS
-        try {
-            scene.getStylesheets().add(css.toURI().toURL().toString());
-        } catch (MalformedURLException e){
-            e.printStackTrace();
+            ToggleButton pictureButton = new ToggleButton("Picture");
+            pictureButton.setPrefSize(256,64);
+            pictureButton.setToggleGroup(toggleGroup);
+            pictureButton.setUserData(picturePane.getId());
+
+            ToggleButton miscButton = new ToggleButton("Miscellaneous");
+            miscButton.setPrefSize(256,64);
+            miscButton.setToggleGroup(toggleGroup);
+            miscButton.setUserData(miscPane.getId());
+
+            ToggleButton dbButton = new ToggleButton("Database");
+            dbButton.setPrefSize(256,64);
+            dbButton.setToggleGroup(toggleGroup);
+            dbButton.setUserData(dbPane.getId());
+
+            toggleGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() { //Toggle listner
+                @Override
+                public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
+                    if(newValue == null){
+                        for(Node node: settingsPanes.getChildren()){
+                            node.setVisible(false);
+                        }
+                    } else {
+                        String valueOfToggle = (String)toggleGroup.getSelectedToggle().getUserData();
+                        for (Node node: settingsPanes.getChildren()) {
+                            if(node.getId().equals(valueOfToggle)){
+                                node.setVisible(true);
+                            } else {
+                                node.setVisible(false);
+                            }
+                        }
+
+                    }
+                }
+            });
+
+            //------- FINAL SCENE SETUP ------- (No new nodes below this line)
+
+            HBox buttonBox = new HBox(); //Setup of button components
+            buttonBox.setAlignment(Pos.CENTER);
+            buttonBox.getChildren().addAll(maintenanceButton,pictureButton,miscButton,dbButton);
+            buttonBox.setSpacing(16);
+
+            BorderPane topPane = new BorderPane(); //Top pane for Info labels and buttons
+            //topPane.setLeft(topBox);
+            topPane.setBottom(buttonBox);
+            topPane.setTop(statusArea);
+            topPane.setStyle("-fx-background-color: #eaeaea"); //TODO Access by ID instead
+
+            BorderPane root = new BorderPane(); //Setting up Root pane
+            root.setTop(topPane);
+            root.setCenter(settingsPanes);
+
+            Scene scene = new Scene(root, 1980, 1080); //Creating Scene
+            File css = new File("res/css/minimal.css"); //Adding CSS
+            try {
+                scene.getStylesheets().add(css.toURI().toURL().toString());
+            } catch (MalformedURLException e){
+                e.printStackTrace();
+            }
+
+            primaryStage.setScene(scene);
+            primaryStage.show();
         }
 
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
+        private ArrayList<BorderPane> getPanels(ArrayList<String> labels, ArrayList<String> statusArray){
+            ArrayList<BorderPane> panels = new ArrayList<>();
+            int prefButtonWidth = 156;
+            int prefButtonHeight = 64;
 
-    private ArrayList<BorderPane> getPanels(){
-        ArrayList<BorderPane> panels = new ArrayList<>();
-        int prefButtonWidth = 156;
-        int prefButtonHeight = 64;
-        Random r = new Random();
+            for(int i = 0; i < labels.size(); i++){
 
-        String[] settingLabels = {"Power","Volume","Brightness","Direction","Construction Info","Perform Checkup","Network Connection","Consumption","etc"}; //TODO remove this after JSON implementation
+                Label text = new Label(labels.get(i));
+                text.setFont(new Font("Arial",24));
+                int currentSetting = i+2;
 
-        for(int i = 0; i < 6; i++){ //TODO Loop the length of the JSON object list
+                HBox rightBox = new HBox();
+                rightBox.setSpacing(16);
+                rightBox.setAlignment(Pos.CENTER_RIGHT);
 
-            Label text = new Label(settingLabels[r.nextInt(8)]);
-            text.setFont(new Font("Arial",24));
+                Button changeSettings = new Button();
+                changeSettings.setText("Edit");
+                changeSettings.setPrefSize(prefButtonWidth,prefButtonHeight);
 
-            HBox rightBox = new HBox();
-            rightBox.setSpacing(16);
-            rightBox.setAlignment(Pos.CENTER_RIGHT);
+                Label status = new Label(statusArray.get(i));
 
-            Button changeSettings = new Button();
-            changeSettings.setText("Change Setting");
-            changeSettings.setPrefSize(prefButtonWidth,prefButtonHeight);
+                String choice;
+                if (statusArray.get(i).toLowerCase().equals("on") || statusArray.get(i).toLowerCase().equals("off"))
+                {
+                    choice = "boolean";
+                } else if(statusArray.get(i).chars().allMatch( Character::isDigit)){
+                    choice = "slider";
+                } else {
+                    choice = "combobox";
+                }
 
+                switch (choice){
+                    case "boolean":
+                        Dialog toggleDialog = new Dialog();
+                        toggleDialog.setTitle("Toggle Window");
+                        toggleDialog.setHeaderText("Change [SETTING]");
 
-            switch (r.nextInt(3)+1){
-                case 1:
-                    Dialog toggleDialog = new Dialog();
-                    toggleDialog.setTitle("Toggle Window");
-                    toggleDialog.setHeaderText("Change [SETTING]");
+                        ButtonType saveButton = new ButtonType("Save", ButtonBar.ButtonData.OK_DONE);
+                        toggleDialog.getDialogPane().getButtonTypes().addAll(saveButton,ButtonType.CANCEL);
 
-                    ButtonType saveButton = new ButtonType("Save", ButtonBar.ButtonData.OK_DONE);
-                    toggleDialog.getDialogPane().getButtonTypes().addAll(saveButton,ButtonType.CANCEL);
+                        GridPane grid = new GridPane();
+                        grid.setHgap(10);
+                        grid.setVgap(10);
+                        grid.setPadding(new Insets(20,150,10,10));
 
-                    GridPane grid = new GridPane();
-                    grid.setHgap(10);
-                    grid.setVgap(10);
-                    grid.setPadding(new Insets(20,150,10,10));
+                        ToggleButton button = new ToggleButton();
+                        grid.add(new Label("Toggle:"),0,0);
+                        grid.add(button,0,1);
 
-                    ToggleButton button = new ToggleButton();
-                    grid.add(new Label("Toggle:"),0,0);
-                    grid.add(button,0,1);
+                        button.setSelected(false);
 
-                    button.setSelected(false);
+                        toggleDialog.getDialogPane().setContent(grid);
 
-                    toggleDialog.getDialogPane().setContent(grid);
+                        toggleDialog.setResult(button.isSelected());
 
-                    toggleDialog.setResult(button.isSelected());
+                        toggleDialog.setResultConverter(dialogButton -> {
+                            if(dialogButton == saveButton){
+                                return button.isSelected();
+                            }
+                            return null;
+                        });
 
-                    toggleDialog.setResultConverter(dialogButton -> {
-                        if(dialogButton == saveButton){
-                            return button.isSelected();
-                        }
-                        return null;
-                    });
+                        changeSettings.setOnAction(event -> {
+                            Optional<Boolean> result = toggleDialog.showAndWait();
+                        });
+                        break;
+                    case "slider":
+                        Dialog dropDownDialog = new Dialog();
+                        dropDownDialog.setTitle("Toggle Window");
+                        dropDownDialog.setHeaderText("Change [SETTING]");
 
-                    changeSettings.setOnAction(event -> {
-                        Optional<Boolean> result = toggleDialog.showAndWait();
-                        System.out.println("Value: " + result.get().booleanValue());
-                    });
-                    break;
-                case 2:
-                    Dialog dropDownDialog = new Dialog();
-                    dropDownDialog.setTitle("Toggle Window");
-                    dropDownDialog.setHeaderText("Change [SETTING]");
+                        ButtonType saveButtonDrop = new ButtonType("Save", ButtonBar.ButtonData.OK_DONE);
+                        dropDownDialog.getDialogPane().getButtonTypes().addAll(saveButtonDrop,ButtonType.CANCEL);
 
-                    ButtonType saveButtonDrop = new ButtonType("Save", ButtonBar.ButtonData.OK_DONE);
-                    dropDownDialog.getDialogPane().getButtonTypes().addAll(saveButtonDrop,ButtonType.CANCEL);
+                        GridPane gridDrop = new GridPane();
+                        gridDrop.setHgap(10);
+                        gridDrop.setVgap(10);
+                        gridDrop.setPadding(new Insets(20,150,10,10));
 
-                    GridPane gridDrop = new GridPane();
-                    gridDrop.setHgap(10);
-                    gridDrop.setVgap(10);
-                    gridDrop.setPadding(new Insets(20,150,10,10));
+                        Slider slider = new Slider();
+                        slider.setMin(0);
+                        slider.setMax(100);
+                        slider.setValue(Integer.parseInt(statusArray.get(i)));
+                        slider.setShowTickLabels(true);
+                        slider.setShowTickMarks(true);
+                        slider.setMajorTickUnit(50);
+                        slider.setMinorTickCount(4);
+                        slider.setBlockIncrement(10);
+                        slider.setSnapToTicks(true);
 
-                    Slider slider = new Slider();
-                    slider.setMin(0);
-                    slider.setMax(100);
-                    slider.setValue(50); //get value from protocol TODO
-                    slider.setShowTickLabels(true);
-                    slider.setShowTickMarks(true);
-                    slider.setMajorTickUnit(50);
-                    slider.setMinorTickCount(5);
-                    slider.setBlockIncrement(10);
+                        gridDrop.add(new Label("Slider:"),0,0);
+                        gridDrop.add(slider,0,1);
 
-                    gridDrop.add(new Label("Slider:"),0,0);
-                    gridDrop.add(slider,0,1);
+                        dropDownDialog.getDialogPane().setContent(gridDrop);
 
-                    dropDownDialog.getDialogPane().setContent(gridDrop);
+                        dropDownDialog.setResult(slider.getValue());
 
-                    dropDownDialog.setResult(slider.getValue());
+                        dropDownDialog.setResultConverter(dialogButton -> {
+                            if(dialogButton == saveButtonDrop){
+                                int calculation = Math.round((long)slider.getValue());
+                                    return calculation;
+                                }
+                                return null;
+                            });
 
-                    dropDownDialog.setResultConverter(dialogButton -> {
-                        if(dialogButton == saveButtonDrop){
-                            return slider.getValue();
-                        }
-                        return null;
-                    });
+                            changeSettings.setOnAction(event -> {
+                                Optional<Integer> result = dropDownDialog.showAndWait();
+                                status.setText(result.get().toString());
+                                int[] value = {result.get()};
+                                Platform.runLater( () -> setValue(currentSetting,value));
+                            });
+                            break;
+                        case "combobox":
+                            Dialog comboBoxDialog = new Dialog();
+                            comboBoxDialog.setTitle("Toggle Window");
+                            comboBoxDialog.setHeaderText("Change [SETTING]");
 
-                    changeSettings.setOnAction(event -> {
-                        Optional<Boolean> result = dropDownDialog.showAndWait();
-                        System.out.println("Value: " + result);
-                    });
-                    break;
-                case 3:
-                    Dialog comboBoxDialog = new Dialog();
-                    comboBoxDialog.setTitle("Toggle Window");
-                    comboBoxDialog.setHeaderText("Change [SETTING]");
+                            ButtonType saveButtonCombo = new ButtonType("Save", ButtonBar.ButtonData.OK_DONE);
+                            comboBoxDialog.getDialogPane().getButtonTypes().addAll(saveButtonCombo,ButtonType.CANCEL);
 
-                    ButtonType saveButtonCombo = new ButtonType("Save", ButtonBar.ButtonData.OK_DONE);
-                    comboBoxDialog.getDialogPane().getButtonTypes().addAll(saveButtonCombo,ButtonType.CANCEL);
+                            GridPane gridCombo = new GridPane();
+                            gridCombo.setHgap(10);
+                            gridCombo.setVgap(10);
+                            gridCombo.setPadding(new Insets(20,150,10,10));
 
-                    GridPane gridCombo = new GridPane();
-                    gridCombo.setHgap(10);
-                    gridCombo.setVgap(10);
-                    gridCombo.setPadding(new Insets(20,150,10,10));
+                            ObservableList<String> options =
+                                    FXCollections.observableArrayList(
+                                            "Put in",
+                                            "Different",
+                                            "Items",
+                                            "Here"
+                                    );
+                            final ComboBox comboBox = new ComboBox(options);
 
-                    ObservableList<String> options =
-                            FXCollections.observableArrayList(
-                                    "Put in",
-                                    "Different",
-                                    "Items",
-                                    "Here"
-                            );
-                    final ComboBox comboBox = new ComboBox(options);
+                            gridCombo.add(new Label("Combo:"),0,0);
+                            gridCombo.add(comboBox,0,1);
 
-                    gridCombo.add(new Label("Combo:"),0,0);
-                    gridCombo.add(comboBox,0,1);
+                            comboBoxDialog.getDialogPane().setContent(gridCombo);
 
-                    comboBoxDialog.getDialogPane().setContent(gridCombo);
+                            comboBoxDialog.setResult(comboBox.getValue());
 
-                    comboBoxDialog.setResult(comboBox.getValue());
+                            comboBoxDialog.setResultConverter(dialogButton -> {
+                                if(dialogButton == saveButtonCombo){
+                                    return comboBox.getValue();
+                                }
+                                return null;
+                            });
 
-                    comboBoxDialog.setResultConverter(dialogButton -> {
-                        if(dialogButton == saveButtonCombo){
-                            return comboBox.getValue();
-                        }
-                        return null;
-                    });
-
-                    changeSettings.setOnAction(event -> {
-                        Optional<Boolean> result = comboBoxDialog.showAndWait();
-                        System.out.println("Value: " + result);
-                    });
+                            changeSettings.setOnAction(event -> {
+                                Optional<Boolean> result = comboBoxDialog.showAndWait();
+                        });
                     break;
                 default:
 
             }
 
-            rightBox.getChildren().add(changeSettings);
+            rightBox.getChildren().addAll(status,changeSettings);
 
             HBox leftBox = new HBox();
             leftBox.setSpacing(16);
@@ -344,4 +363,20 @@ public class GUIMainScene extends Application {
 
         return panels;
     }
+
+    private void setValue(int setting, int[] value) {
+        try {
+            Controller ctrl = new Controller();
+            String[] setKeyList = ctrl.getSET_KEY_LIST();
+            String request = setKeyList[setting];
+            String[][] responseStatus = ctrl.sendRequest(request,value);
+            //System.out.println(Arrays.toString(responseStatus));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }
