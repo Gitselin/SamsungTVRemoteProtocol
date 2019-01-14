@@ -302,9 +302,11 @@ public class PrclAdapter implements iPrclAdapter {
             // set screen id
             result[varPositions[0]] = SCREEN_ID; // first position of a variable is the screen id
             // set other variables from parameters
+            int guiDataPos = 0;
             debugPrint("varPositions length: " + varPositions.length + " | varData length: " + variableData.length);
             for (int i = 1; i < varPositions.length-1; i++) { // skip the first (ID) & the last (checksum)
-                result[varPositions[i]] = variableData[i];
+                result[varPositions[i]] = variableData[guiDataPos];
+                guiDataPos++;
             }
             // calc checksum
             result[result.length-1] = calcChecksum(result);
