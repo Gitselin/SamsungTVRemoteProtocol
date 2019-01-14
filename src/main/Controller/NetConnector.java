@@ -53,9 +53,9 @@ public class NetConnector {
     throws IOException {
         byte[] buffer = new byte[ackLength];
 
-        //debugPrint("..Waiting to read data");
+        debugPrint("..Waiting to read data");
         int bytesRead = netIn.read(buffer, 0, ackLength); // tricky should we used defined length and risk problems if we don't get what we expect or generic readbytes and risk "polluted" data
-        //debugPrint("received " + bytesRead + " bytes of data: " + printByteArray(buffer), true);
+        debugPrint("received " + bytesRead + " bytes of data: " + printByteArray(buffer), true);
 
         return buffer;
     }
