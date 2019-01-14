@@ -114,6 +114,11 @@ public abstract class Utility {
         return str;
     }
 
+    public static int intHexToBase10(int hex) {
+        String hexString = Integer.toHexString(hex);
+        return Integer.parseInt(hexString, 16); // parse hex string to base10 int
+    }
+
 
     /*
      *  JSON Utility

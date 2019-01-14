@@ -325,8 +325,7 @@ public class PrclAdapter implements iPrclAdapter {
             int value = response[i];
             if (definitions.containsKey(key)) {
                 if (definitions.get(key).size() == 1) { // if there is only one value (null, -1) means it is a range and we just want the int as string but converted from hex to base10
-                    String hex = Integer.toHexString(value);
-                    value = Integer.parseInt(hex, 16); // parse hex string to base10 int
+
                     result[i] = Integer.toString(value);
                 } else { // Something if value is not found (eks. return hex value & "not found in definitions")
                     if (definitions.get(key).containsKey(value)) {
@@ -336,7 +335,8 @@ public class PrclAdapter implements iPrclAdapter {
                     }
                 }
             } else {
-                result[i] = Integer.toHexString(value); // if key is not in definitions just do straight toHexString
+                System.out.println("Definitions key [" + key + "] not found"); // TODO - DEBUG WIP - change to debugPrint function later
+                result[i] = Integer.toString(value); // if key is not in definitions just do straight toHexString //TODO - Find out why this happens for some cases, like contrast
             }
         }
         ackData[1] = result;
