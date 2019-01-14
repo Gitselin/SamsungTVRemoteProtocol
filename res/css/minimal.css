@@ -26,6 +26,13 @@
     -fx-text-fill: dimgrey;
 }
 
+.dialog-pane .toggle-button{
+    -fx-background-color: red;
+}
+.dialog-pane .toggle-button:selected{
+    -fx-background-color: green;
+}
+
 .toggle-button
 {
     -fx-background-color: rgba(221, 221, 221, 0.98);
@@ -57,4 +64,22 @@
     width: 100px;
     height: 100px;
     border-radius: 50%
+}
+
+.slider .track {
+    -fx-pref-height:86;
+}
+
+.slider:vertical .track {
+    -fx-pref-width:86;
+}
+
+.slider .thumb {
+    -fx-pref-height: 92;
+    -fx-pref-width: 30;
+}
+
+.slider .label {
+    -fx-font-size: 26;
+    -fx-font-family: Arial;
 }
