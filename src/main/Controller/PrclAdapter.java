@@ -324,17 +324,19 @@ public class PrclAdapter implements iPrclAdapter {
             String key = ackData[0][i]; // Response structure
             int value = response[i];
             if (definitions.containsKey(key)) {
-                if (definitions.get(key).size() == 1) { // if there is only one value (null, -1) means it is a range and we just want the int as string without conversion
+                if (definitions.get(key).size() == 1) { // if there is only one value (null, -1) means it is a range and we just want the int as string but converted from hex to base10
+                    String hex = Integer.toHexString(value);
+                    value = Integer.parseInt(hex, 16); // parse hex string to base10 int
                     result[i] = Integer.toString(value);
                 } else { // Something if value is not found (eks. return hex value & "not found in definitions")
                     if (definitions.get(key).containsKey(value)) {
                         result[i] = definitions.get(key).get(value);
                     } else {
-                        result[i] = "Error - Value not found in definitions (" + Integer.toHexString(response[i]) + ")";
+                        result[i] = "Error - Value not found in definitions (" + Integer.toHexString(value) + ")";
                     }
                 }
             } else {
-                result[i] = Integer.toHexString(response[i]); // if key is not in definitions just do straight toHexString
+                result[i] = Integer.toHexString(value); // if key is not in definitions just do straight toHexString
             }
         }
         ackData[1] = result;
