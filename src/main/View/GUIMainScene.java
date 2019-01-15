@@ -68,7 +68,6 @@ public class GUIMainScene extends Application {
 
         } catch (IOException e){
             statusInfo.add(e.toString());
-            System.out.println("Launch failed");
             e.printStackTrace();
         }
 
@@ -214,7 +213,6 @@ public class GUIMainScene extends Application {
             int prefWindowHeight = 512;
 
             for(int i = 0; i < labels.size(); i++){
-
                 Label text = new Label(labels.get(i));
                 text.setFont(new Font("Arial",24));
                 int currentSetting = i+2;
@@ -230,7 +228,7 @@ public class GUIMainScene extends Application {
                 Label status = new Label(statusArray.get(i));
 
                 String choice;
-                if (statusArray.get(i).toLowerCase().equals("on") || statusArray.get(i).toLowerCase().equals("off"))
+                if (statusArray.get(i).equalsIgnoreCase("on") || statusArray.get(i).equalsIgnoreCase("off") && !labels.get(i).equals("Color Tone"))
                 {
                     choice = "boolean";
                 } else if(statusArray.get(i).chars().allMatch( Character::isDigit)){
@@ -320,7 +318,6 @@ public class GUIMainScene extends Application {
                         slider.setMajorTickUnit(5);
                         slider.setMinorTickCount(0);
                         slider.setBlockIncrement(10);
-                        slider.setSnapToTicks(true);
                         slider.setPrefSize(512,256);
 
                         gridDrop.add(new Label("Slider:"),0,0);
@@ -363,14 +360,15 @@ public class GUIMainScene extends Application {
                         gridCombo.setVgap(10);
                         gridCombo.setPadding(new Insets(20,150,10,10));
 
-                        ObservableList<String> options =
+                        ObservableList<String> options = //TODO fetch data from JSON
                                 FXCollections.observableArrayList(
-                                        "Put in",
-                                        "Different",
-                                        "Items",
-                                        "Here"
+                                        "Cool",
+                                        "Normal",
+                                        "Warm",
+                                        "Off"
                                 );
                         final ComboBox comboBox = new ComboBox(options);
+                        comboBox.setValue(statusArray.get(i)); //TODO maybe choose by ID instead of choose from the statusArray
 
                         gridCombo.add(new Label("Combo:"),0,0);
                         gridCombo.add(comboBox,0,1);
@@ -387,8 +385,27 @@ public class GUIMainScene extends Application {
                         });
 
                         changeSettings.setOnAction(event -> {
-                            Optional<Boolean> result = comboBoxDialog.showAndWait();
-                            status.setText(result.get().toString());
+                            Optional<String> result = comboBoxDialog.showAndWait();
+                            result.ifPresent(status::setText);
+                            int[] value = new int[1];
+                            switch (result.get()){
+                                case "Cool":
+                                    value[0] = 1;
+                                    sendValue(currentSetting,value);
+                                    break;
+                                case "Normal":
+                                    value[0] = 2;
+                                    sendValue(currentSetting,value);
+                                    break;
+                                case "Warm":
+                                    value[0] = 3;
+                                    sendValue(currentSetting,value);
+                                    break;
+                                case "Off":
+                                    value[0] = 80;
+                                    sendValue(currentSetting,value);
+                                    break;
+                            }
                     });
                     break;
                 default:
@@ -420,7 +437,6 @@ public class GUIMainScene extends Application {
             String[] setKeyList = ctrl.getSET_KEY_LIST();
             String request = setKeyList[setting];
             String[][] responseStatus = ctrl.sendRequest(request,value);
-            //System.out.println(Arrays.toString(responseStatus));
         } catch (IOException e) {
             e.printStackTrace();
         }

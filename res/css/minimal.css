@@ -83,3 +83,8 @@
     -fx-font-size: 26;
     -fx-font-family: Arial;
 }
+
+.combo-box {
+    -fx-cell-size: 86;
+    -fx-font-size: 40;
+}

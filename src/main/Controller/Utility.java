@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public abstract class Utility {
 
-    private static boolean debugMode = true;
+    private static boolean debugMode = false;
 
     /*
      *  Utility print methods
