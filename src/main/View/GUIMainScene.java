@@ -317,7 +317,7 @@ public class GUIMainScene extends Application {
                         slider.setValue(Integer.parseInt(statusArray.get(i)));
                         slider.setShowTickLabels(true);
                         slider.setShowTickMarks(true);
-                        slider.setMajorTickUnit(10);
+                        slider.setMajorTickUnit(5);
                         slider.setMinorTickCount(0);
                         slider.setBlockIncrement(10);
                         slider.setSnapToTicks(true);
