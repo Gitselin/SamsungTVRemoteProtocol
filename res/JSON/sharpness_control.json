@@ -50,8 +50,8 @@
     },
     "Definitions": {
       "Description": "Data value of -1 signifying no conversion needed",
-      "Keys": ["Sharpness Setting"],
-      "Sharpness Setting": {
+      "Keys": ["Sharpness"],
+      "Sharpness": {
         "Data":["-1"],
         "Display Value": ["null"]
       }

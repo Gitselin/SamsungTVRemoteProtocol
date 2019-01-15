@@ -50,8 +50,8 @@
     },
     "Definitions": {
       "Description": "Data value of -1 signifying no conversion needed",
-      "Keys": ["Tint Setting"],
-      "Tint Setting": {
+      "Keys": ["Tint"],
+      "Tint": {
         "Data":["-1"],
         "Display Value": ["null"]
       }

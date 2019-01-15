@@ -50,8 +50,8 @@
     },
     "Definitions": {
       "Description": "Data value of -1 signifying no conversion needed",
-      "Keys": ["Color Setting"],
-      "Color Setting": {
+      "Keys": ["Color"],
+      "Color": {
         "Data":["-1"],
         "Display Value": ["null"]
       }

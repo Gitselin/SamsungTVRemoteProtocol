@@ -50,8 +50,8 @@
     },
     "Definitions": {
       "Description": "Data value of -1 signifying no conversion needed",
-      "Keys": ["Contrast Setting"],
-      "Contrast Setting": {
+      "Keys": ["Contrast"],
+      "Contrast": {
         "Data":["-1"],
         "Display Value": ["null"]
       }
